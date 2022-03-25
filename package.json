@@ -9,6 +9,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "firebase": "^9.6.10",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.0"
