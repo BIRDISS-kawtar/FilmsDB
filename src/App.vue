@@ -1,6 +1,6 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
+
 /* --------- LOGOUT with firebase code ------------ */
 import { getAuth, signOut } from "firebase/auth";
 export default{
@@ -30,7 +30,7 @@ export default{
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <p>Hello World</p>
       <nav>
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/signup">Sign Up</RouterLink>
