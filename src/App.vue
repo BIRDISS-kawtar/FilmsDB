@@ -1,6 +1,22 @@
-<script setup lang="ts">
+<script>
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "@/components/HelloWorld.vue";
+/* --------- LOGOUT with firebase code ------------ */
+import { getAuth, signOut } from "firebase/auth";
+export default{
+  methods: {
+    logout(){
+      const auth = getAuth();
+      signOut(auth).then(() => {
+        alert('Successfully logged out');
+        this.$router.push('/');
+      }).catch((error) => {
+        alert(error.message);
+        this.$router.push('/');
+      });
+    },
+  },
+};
 </script>
 
 <template>
@@ -15,10 +31,12 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
       <nav>
+        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/signup">Sign Up</RouterLink>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/dashboard">Dashboard</RouterLink>
+        <button @click="logout">Logout</button>
       </nav>
     </div>
   </header>
@@ -28,6 +46,10 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 <style>
 @import "@/assets/base.css";
+
+input {   
+  margin-right: 20px; 
+}
 
 #app {
   max-width: 1280px;

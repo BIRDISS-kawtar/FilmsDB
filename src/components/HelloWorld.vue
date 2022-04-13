@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// here we define properties and methods to be used in the same or in other components
 defineProps<{
   msg: string;
 }>();

@@ -3,12 +3,14 @@ import App from "./App.vue";
 import router from "./router";
 import store from './store'
 
+// The default content 
 const app = createApp(App).use(store);
 
 app.use(router);
 
 app.mount("#app");
 
+// Code added for firebase configuration and intialization
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -25,5 +27,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const appFire = initializeApp(firebaseConfig);
+// TODO : remove the getAnalytics for Google 
 const analytics = getAnalytics(appFire);
 
