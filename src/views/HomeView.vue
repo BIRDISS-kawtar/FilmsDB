@@ -11,8 +11,18 @@ export default {
 </script>
 
 <template>
-<div>
-    <h1>Welcome to the home page!</h1>
-    <GetGenres/>
+<!------------- Title Block------------->
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Films DB, All your favourite movies in one place ! </h1>
+          <GetGenres/>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+<!------------- END : Title Block------------->
 </template>

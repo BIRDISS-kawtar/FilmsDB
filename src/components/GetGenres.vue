@@ -1,11 +1,3 @@
-<template>
-  <div class="card text-center m-3">
-    <h5 class="card-header">GET Request for genres with Error Handling</h5>
-    <div class="card-body">Genres are: {{genres}}</div>
-    <div class="card-body">Error message: {{errorMessage}}</div>
-  </div>
-</template>
-
 <script>
 export default {
   name: "get-genres-of-movies",
@@ -41,3 +33,15 @@ export default {
   }
 };
 </script>
+<template>
+  <div class="card text-center m-3">
+    <h5 class="card-header">GET Request for genres with Error Handling</h5>
+    <div class="card-body">Genres are: {{genres}}</div>
+    <div class="card-body">Error message: {{errorMessage}}</div>
+  </div>
+</template>
+<style scoped>
+.card-body,.card-header{
+  color :  #eeeeee;
+}
+</style>
