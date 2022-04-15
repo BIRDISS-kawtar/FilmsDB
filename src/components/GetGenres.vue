@@ -1,15 +1,16 @@
 <script>
 export default {
-  name: "get-genres-of-movies",
+  name: "get-genres-of-movies", //  always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
   data() {
     return {
+      // The data to use in the template and in other components
       genres: new Array(),
       errorMessage: null
     };
   },
   created() {
     // GET request using fetch with error handling
-    fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=18f0e56333fe7988fb15f351af41f492&language=en-US")
+    fetch("https://api.themoviedb.org/3/genre/movie/list?api_key="+this.$store.getters.getApiKey+"&language=en-US")
       .then(async response => {
         const data = await response.json();
 
@@ -40,6 +41,7 @@ export default {
     <div class="card-body">Error message: {{errorMessage}}</div>
   </div>
 </template>
+<!---With the keyword scoped the css style is applicable only in this page--->
 <style scoped>
 .card-body,.card-header{
   color :  #eeeeee;

@@ -1,5 +1,6 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
+import createStore from '@/store/index.js'
 /* --------- LOGOUT with firebase code ------------ */
 import { getAuth, signOut } from "firebase/auth";
 export default{
@@ -16,6 +17,19 @@ export default{
     },
   },
 };
+/*-------- Track the chosen value of the on left items of the navbar---------- */
+$(document).ready(function () {
+	$("ul[id*=tracked_choices] li").click(function () {
+		alert($(this).html()); // gets innerHTML of clicked li
+		alert($(this).text()); // gets text contents of clicked li
+		console.log('before commit');
+		//this.$store.commit('updateChoice','Updateee');
+		createStore.commit('updateChoice',$(this).text());
+		console.log('after commit');
+		console.log(createStore.getters.chosen_item_navbar);
+		//console.log(this.$store.getters.chosen_item_navbar);
+	});
+});
 </script>
 <template>
 <!-------------------Header------------------->
@@ -37,12 +51,12 @@ export default{
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
 					<!--------------On Left Items--------------->
-					<ul class="nav navbar-nav flex-child-menu menu-left">
+					<ul id="tracked_choices" class="nav navbar-nav flex-child-menu menu-left">
 						<li class="hidden">
 							<a href="#page-top"></a>
 						</li>
 						<!--Trending Section -->
-						<li><a href="#">Trending</a></li>
+						<li><a href="/">Trending</a></li>
 						<!-----------Genres Section------------ -->
 						<li class="dropdown first">
 							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
@@ -63,7 +77,7 @@ export default{
 						</li>
 						<!-----------END :Genres Section------------ -->
 						<!-----------Top Rated Section------------ -->
-						<li><a href="#">Top Rated</a></li>
+						<li><a href="/">Top Rated</a></li>
 					</ul>
 					<!--------------END : On Left Items--------------->
 					<!--------------On Right Items--------------->

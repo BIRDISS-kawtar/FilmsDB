@@ -1,10 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from './store'
+import store from './store';
+import Paginate from "vuejs-paginate-next";
 
 // The default content 
-const app = createApp(App).use(store);
+const app = createApp(App).use(store).use(Paginate);
 
 app.use(router);
 

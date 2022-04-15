@@ -1,11 +1,16 @@
 <script>
 // The content of the home view is splitted into components 
 import GetGenres from "@/components/GetGenres.vue";
+import TrendingMovies from "@/components/TrendingMovies.vue"
+import TopRatedMovies from "@/components/TopRatedMovies.vue"
+
 // Each imported child component must be registred inside the parent component
 export default {
   name: "home",
   components: {
-   GetGenres
+   GetGenres,
+   TrendingMovies,
+   TopRatedMovies
   }
 };
 </script>
@@ -18,11 +23,12 @@ export default {
 			<div class="col-md-12">
 				<div class="hero-ct">
 					<h1> Films DB, All your favourite movies in one place ! </h1>
-          <GetGenres/>
+          			<GetGenres/>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!------------- END : Title Block------------->
+<TopRatedMovies />
 </template>
