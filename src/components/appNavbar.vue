@@ -4,6 +4,14 @@ import createStore from '@/store/index.js'
 /* --------- LOGOUT with firebase code ------------ */
 import { getAuth, signOut } from "firebase/auth";
 export default{
+    props: { genres: Array},
+  /*---------The data to use in the template and in other components---------*/
+  data() {
+    return {
+       current_selected_genre : null,
+	   genres_navbar: this.$store.getters.getGenres,
+    };
+    },
   methods: {
     logout(){
       const auth = getAuth();
@@ -16,20 +24,17 @@ export default{
       });
     },
   },
+  watch: { // Listener of onChange event of the state of store
+    '$store.state.genres': {
+		handler() {
+			this.genres_navbar = this.$store.getters.getGenres;
+            console.log("watch working");
+        }
+     }
+  },
+
 };
-/*-------- Track the chosen value of the on left items of the navbar---------- */
-$(document).ready(function () {
-	$("ul[id*=tracked_choices] li").click(function () {
-		alert($(this).html()); // gets innerHTML of clicked li
-		alert($(this).text()); // gets text contents of clicked li
-		console.log('before commit');
-		//this.$store.commit('updateChoice','Updateee');
-		createStore.commit('updateChoice',$(this).text());
-		console.log('after commit');
-		console.log(createStore.getters.chosen_item_navbar);
-		//console.log(this.$store.getters.chosen_item_navbar);
-	});
-});
+//TODO :Track the chosen value of the on left items of the navbar
 </script>
 <template>
 <!-------------------Header------------------->
@@ -57,27 +62,18 @@ $(document).ready(function () {
 						</li>
 						<!--Trending Section -->
 						<li><a href="/">Trending</a></li>
+						<!-----------Top Rated Section------------ -->
+						<li><a href="/">Top Rated</a></li>
 						<!-----------Genres Section------------ -->
 						<li class="dropdown first">
 							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
 							Genres<i class="fa fa-angle-down" aria-hidden="true"></i>
 							</a>
-							<ul class="dropdown-menu level1">
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>
-									<ul class="dropdown-menu level2">
-										<li><a href="moviegrid.html">Movie grid</a></li>
-										<li><a href="moviegridfw.html">movie grid full width</a></li>
-									</ul>
-								</li>			
-								<li><a href="movielist.html">Movie list</a></li>
-								<li><a href="moviesingle.html">Movie single</a></li>
-								<li class="it-last"><a href="seriessingle.html">Series single</a></li>
+							<ul v-for="genre in genres_navbar" :key="genre" class="dropdown-menu level1">		
+								<li><a>{{genre}}</a></li>
 							</ul>
 						</li>
 						<!-----------END :Genres Section------------ -->
-						<!-----------Top Rated Section------------ -->
-						<li><a href="/">Top Rated</a></li>
 					</ul>
 					<!--------------END : On Left Items--------------->
 					<!--------------On Right Items--------------->
@@ -104,3 +100,16 @@ $(document).ready(function () {
 </header>
 <!--------------- END : Header ---------------------->
 </template>
+
+<style scoped>
+	.nav button{
+		font-family: 'Dosis', sans-serif;
+		color: #ffffff;
+		font-weight: bold;
+		text-transform: uppercase;
+		border-radius: 5px;
+		border: none;
+		background-color: #dd003f;
+		cursor: pointer;
+	}
+</style>

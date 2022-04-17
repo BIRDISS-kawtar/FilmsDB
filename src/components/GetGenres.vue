@@ -25,7 +25,13 @@ export default {
         for(const genre of data.genres){
             this.genres.push(genre.name);
         }
-
+        console.log("++ done");
+        this.$store.commit("updateGenres",this.genres);
+        console.log("done");
+        for(const genre of this.$store.getters.getGenres){
+            console.log(genre);
+        }
+        console.log("done++");
       })
       .catch(error => {
         this.errorMessage = error;
@@ -35,11 +41,6 @@ export default {
 };
 </script>
 <template>
-  <div class="card text-center m-3">
-    <h5 class="card-header">GET Request for genres with Error Handling</h5>
-    <div class="card-body">Genres are: {{genres}}</div>
-    <div class="card-body">Error message: {{errorMessage}}</div>
-  </div>
 </template>
 <!---With the keyword scoped the css style is applicable only in this page--->
 <style scoped>
