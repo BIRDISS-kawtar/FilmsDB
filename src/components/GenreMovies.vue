@@ -25,7 +25,7 @@ export default {
                 <!---------------- END : Topbar Filter -------------------->
                 <!---------------- List of the fetched movies : By Genre -------------------->
 				<div class="movie-item-style-2">
-					<img src="images/uploads/mv1.jpg" alt="">
+					<!--<img src="/src/assets/images/uploads/mv1.jpg" alt="">-->
 					<div class="mv-item-infor">
 						<h6><a href="moviesingle.html">oblivion <span>(2012)</span></a></h6>
 						<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>

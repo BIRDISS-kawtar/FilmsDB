@@ -21,6 +21,5 @@ export default{
 </template>
 
 <style>
-@import "/public/css/style.css";
-
+@import "./assets/css/style.css";
 </style>

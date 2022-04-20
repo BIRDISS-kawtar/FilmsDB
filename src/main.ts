@@ -3,6 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from './store';
 import Paginate from "vuejs-paginate-next";
+// Code added for firebase configuration and intialization
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 // The default content 
 const app = createApp(App).use(store).use(Paginate);
@@ -10,11 +14,6 @@ const app = createApp(App).use(store).use(Paginate);
 app.use(router);
 
 app.mount("#app");
-
-// Code added for firebase configuration and intialization
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAPpU4VBh4FFhVKP1zG1ASIxKxM_zCQETg",
@@ -28,6 +27,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const appFire = initializeApp(firebaseConfig);
-// TODO : remove the getAnalytics for Google 
-const analytics = getAnalytics(appFire);
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(appFire);
+
+export default db;
 

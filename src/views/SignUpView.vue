@@ -1,23 +1,39 @@
 <script>
 /* -------- SIGN UP with Firebase Code ---------- */
 // The necessary imports of firebase
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import UsersDisplayNames from "../firestoreCRUD/UsersDisplayNames";
 export default {
   data() {
     return {
+      fullname:"",
       email: "",
       password: "",
     };
   },
   methods: {
+    setUserDisplayName(user){
+       if(user){
+         UsersDisplayNames.createUser(user)
+          .then(() => {
+            alert("Display Name added successfully!");
+           })
+          .catch(e => {
+            alert(e);
+          });
+       }
+    },
     // The method signup() is used after the On Submit event in the form
     signup() {
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          alert("Successfully registered! Please login.");
+          // Add display name in the firestore database
+          var userSignedUp = {
+            userID:userCredential.user.uid,
+            userDisplayName : this.fullname
+          };
+          this.setUserDisplayName(userSignedUp);
           // Redirection to the login page
           this.$router.push("/login");
         })
@@ -43,6 +59,12 @@ export default {
                 and v-model for data binding -->
             <form class="form-style-1" @submit.prevent="signup">   
               	<h1> Sign Up </h1>   
+                <div class="row">
+                    <label>
+                        Full Name
+                        <input type="text" placeholder="Full Name..." v-model="fullname" required="required"/>
+                    </label>
+                </div>
                 <div class="row">
                     <label for="email">
                         Email
@@ -73,7 +95,7 @@ export default {
     background: url(/public/images/uploads/user-hero-bg.jpg) repeat;
 }
 .form-style-1 {
-  height: 342px;
+  height: 440px;
   width: 934px;
   margin-top: 200px;
   margin-bottom: 50px;
@@ -83,6 +105,7 @@ export default {
   font-size: 18px;
 }
 .form-style-1 input{
+  width: 700px;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 16px;
