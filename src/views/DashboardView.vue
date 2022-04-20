@@ -26,7 +26,7 @@ export default {
 			if (user) {
 				// User is signed in
 				var user_ID = user.uid;
-			
+				
 				
 
 			} else {
