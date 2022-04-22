@@ -43,7 +43,6 @@
 						<!-- TODO : search for loginLink and btn signupLink and rename them correctly--> 
 						<li class="loginLink"><RouterLink to="/login">Login</RouterLink></li>
 						<li class="loginLink"><RouterLink to="/signup">Sign Up</RouterLink></li>
-						<button class="btn signupLink" @click="logout">Logout</button>
 					</ul>
 					<!--------------END :On Right Items--------------->
 				</div>

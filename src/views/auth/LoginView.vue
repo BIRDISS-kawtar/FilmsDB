@@ -67,7 +67,7 @@ export default {
 <style scoped>
 .common-hero {
     height: 770px;
-    background: url(/public/images/uploads/user-hero-bg.jpg) repeat;
+    background: url('../assets/images/uploads/user-hero-bg.jpg') repeat;
 }
 .form-style-1 {
   height: 342px;
