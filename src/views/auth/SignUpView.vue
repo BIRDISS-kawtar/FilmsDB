@@ -45,7 +45,7 @@
 /* -------- SIGN UP with Firebase Code ---------- */
 // The necessary imports of firebase
 import { getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
-import UsersInfos from "../firestoreCRUD/UsersInfos";
+import UsersInfos from "@/firestoreCRUD/UsersInfos";
 export default {
   data() {
     return {
