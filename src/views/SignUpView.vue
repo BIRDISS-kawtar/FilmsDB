@@ -1,15 +1,15 @@
 <template>
 <!------------- Title Block------------->
-<div class="hero common-hero">
+<div class="hero auth">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="hero-ct">
+				<div class="hero-ct-auth">
           <!------------- Sign Up Form----------------------->
 					<div>   
             <!-- We use the method @submit.prevent to avoid the reloading of page after submitting
                 and v-model for data binding -->
-            <form class="form-style-1" @submit.prevent="signup">   
+            <form class="form-auth" @submit.prevent="signup">   
               	<h1> Sign Up </h1>   
                 <div class="row">
                     <label>
@@ -91,46 +91,7 @@ export default {
 </script>
 
 <style scoped>
-.common-hero {
-    height: 770px;
-    background: url('../assets/images/uploads/user-hero-bg.jpg') repeat;
-}
-.form-style-1 {
+.form-auth {
   height: 440px;
-  width: 934px;
-  margin-top: 200px;
-  margin-bottom: 50px;
-}
-.form-style-1 label{
-  width: 700px;
-  font-size: 18px;
-}
-.form-style-1 input{
-  width: 700px;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 16px;
-}
-.form-style-1 div{
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-.form-style-1 button{
-  font-family: 'Dosis', sans-serif;
-  font-size: 18px;
-  color: #ffffff;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 5px;
-  border: none;
-  background-color: #dd003f;
-  height: 42px;
-  width: 25%;
-  cursor: pointer;
-}
-.hero-ct {
-  padding-top: 0px;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 </style>

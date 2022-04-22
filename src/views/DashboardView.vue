@@ -5,16 +5,48 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="hero-ct">
-                    <h1>This is your Dashboard! </h1><!--TODO : this dashboard must contain the lists of favorite and searched movies-->
-                    <p>This page is only visible to users that are currently logged in</p>
+					<h1>{{userDisplayName}}'s Profile</h1>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!------------- END : Title Block------------->
-
+<!--------------- Dashboard Content Block -------------->
+<div class="page-single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<!------------------- User Sidebar Menu ---------------->
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="user-information">
+					<div class="user-fav">
+						<p>Account Details</p>
+						<ul>
+							<li><a @click="activeComponent = 'Profile'">Profile</a></li>
+							<li><a @click="activeComponent = 'FavoriteMovies'">Favorite movies</a></li>
+						</ul>
+					</div>
+					<div class="user-fav">
+						<p>Others</p>
+						<ul>
+							<li><a>Change password</a></li>
+							<li><a class="btn signupLink" @click="logout">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!------------------- END : User Sidebar Menu ---------------->
+			<!------------------- Active Component Content ---------------->
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<component :is="activeComponent" />
+			</div>
+			<!------------------- END : Active Component Content ---------------->
+		</div>
+	</div>
+</div>
+<!--------------- END : Dashboard Content Block -------------->
 </template>
+ 
 
 <script>
 import FavoriteMovies from "@/components/FavoriteMovies.vue"
@@ -71,58 +103,6 @@ export default {
   },
   
 };
-<<<<<<< HEAD
 </script>
 
-<template>
-<!------------- Title Block------------->
-<div class="hero common-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-					<h1>{{userDisplayName}}'s Profile</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!------------- END : Title Block------------->
-<!--------------- Dashboard Content Block -------------->
-<div class="page-single">
-	<div class="container">
-		<div class="row ipad-width2">
-			<!------------------- User Sidebar Menu ---------------->
-			<div class="col-md-3 col-sm-12 col-xs-12">
-				<div class="user-information">
-					<div class="user-fav">
-						<p>Account Details</p>
-						<ul>
-							<li><a @click="activeComponent = 'Profile'">Profile</a></li>
-							<li><a @click="activeComponent = 'FavoriteMovies'">Favorite movies</a></li>
-						</ul>
-					</div>
-					<div class="user-fav">
-						<p>Others</p>
-						<ul>
-							<li><a>Change password</a></li>
-							<li><a class="btn signupLink" @click="logout">Logout</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!------------------- END : User Sidebar Menu ---------------->
-			<!------------------- Active Component Content ---------------->
-			<div class="col-md-9 col-sm-12 col-xs-12">
-				<component :is="activeComponent" />
-			</div>
-			<!------------------- END : Active Component Content ---------------->
-		</div>
-	</div>
-</div>
-<!--------------- END : Dashboard Content Block -------------->
-</template>
- 
-=======
-</script>
->>>>>>> a6dbafc1584c7018d071c99829b765cdaf895e6d
+
