@@ -1,3 +1,6 @@
+<template>
+</template>
+
 <script>
 export default {
   name: "get-genres-of-movies", //  always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
@@ -40,8 +43,7 @@ export default {
   }
 };
 </script>
-<template>
-</template>
+
 <!---With the keyword scoped the css style is applicable only in this page--->
 <style scoped>
 .card-body,.card-header{

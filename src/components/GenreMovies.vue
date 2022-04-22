@@ -1,9 +1,3 @@
-<script>
-// Each imported child component must be registred inside the parent component
-export default {
-  name: "movies-by-genre",
-};
-</script>
 <template>
 <div class="page-single movie_list">
 	<div class="container">
@@ -56,3 +50,10 @@ export default {
 	</div>
 </div>
 </template>
+
+<script>
+// Each imported child component must be registred inside the parent component
+export default {
+  name: "movies-by-genre",
+};
+</script>

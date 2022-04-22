@@ -1,3 +1,46 @@
+<template>
+<!------------- Title Block------------->
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+          <!------------- Sign Up Form----------------------->
+					<div>   
+            <!-- We use the method @submit.prevent to avoid the reloading of page after submitting
+                and v-model for data binding -->
+            <form class="form-style-1" @submit.prevent="signup">   
+              	<h1> Sign Up </h1>   
+                <div class="row">
+                    <label>
+                        Full Name
+                        <input type="text" placeholder="Full Name..." v-model="fullname" required="required"/>
+                    </label>
+                </div>
+                <div class="row">
+                    <label for="email">
+                        Email
+                        <input type="email" placeholder="Email address..." v-model="email" required="required"/>
+                    </label>
+                </div>  
+                <div class="row">
+                    <label for="password">
+                        Password
+                        <input type="password" placeholder="Password..." v-model="password" required="required"/>
+                    </label>
+                </div>   
+                <button type="submit">Submit </button>   
+            </form>  
+				  </div>
+          <!------------- END : Sign Up Form----------------------->
+			  </div>
+		  </div>
+	  </div>
+  </div>
+</div>
+<!------------- END : Title Block------------->
+</template>
+
 <script>
 /* -------- SIGN UP with Firebase Code ---------- */
 // The necessary imports of firebase
@@ -46,48 +89,6 @@ export default {
   },
 };
 </script>
-<template>
-<!------------- Title Block------------->
-<div class="hero common-hero ytnvy">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-          <!------------- Sign Up Form----------------------->
-					<div>   
-            <!-- We use the method @submit.prevent to avoid the reloading of page after submitting
-                and v-model for data binding -->
-            <form class="form-style-1" @submit.prevent="signup">   
-              	<h1> Sign Up </h1>   
-                <div class="row">
-                    <label>
-                        Full Name
-                        <input type="text" placeholder="Full Name..." v-model="fullname" required="required"/>
-                    </label>
-                </div>
-                <div class="row">
-                    <label for="email">
-                        Email
-                        <input type="email" placeholder="Email address..." v-model="email" required="required"/>
-                    </label>
-                </div>  
-                <div class="row">
-                    <label for="password">
-                        Password
-                        <input type="password" placeholder="Password..." v-model="password" required="required"/>
-                    </label>
-                </div>   
-                <button type="submit">Submit </button>   
-            </form>  
-				  </div>
-          <!------------- END : Sign Up Form----------------------->
-			  </div>
-		  </div>
-	  </div>
-  </div>
-</div>
-<!------------- END : Title Block------------->
-</template>
 
 <style scoped>
 .common-hero {

@@ -1,3 +1,36 @@
+<template>
+<!------------- Title Block------------->
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+           <!------------- Login Form----------------------->
+            <form class="form-style-1" @submit.prevent="login">   
+              	<h1> Login </h1>   
+                <div class="row">
+                    <label for="email">
+                        Email
+                        <input type="email" placeholder="Email address..." v-model="email" required="required"/>
+                    </label>
+                </div>  
+                <div class="row">
+                    <label for="password">
+                        Password
+                        <input type="password" placeholder="Password..." v-model="password" required="required"/>
+                    </label>
+                </div>   
+                <button type="submit">Submit </button>   
+            </form> 
+          <!-------------END : Login Form----------------------->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!------------- END : Title Block------------->
+</template>
+
 <script>
 /* -------- LOGIN with Firebase Code ---------- */
 // The necessary imports of firebase
@@ -31,38 +64,6 @@ export default {
 };
 </script>
 
-<template>
-<!------------- Title Block------------->
-<div class="hero common-hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="hero-ct">
-           <!------------- Login Form----------------------->
-            <form class="form-style-1" @submit.prevent="login">   
-              	<h1> Login </h1>   
-                <div class="row">
-                    <label for="email">
-                        Email
-                        <input type="email" placeholder="Email address..." v-model="email" required="required"/>
-                    </label>
-                </div>  
-                <div class="row">
-                    <label for="password">
-                        Password
-                        <input type="password" placeholder="Password..." v-model="password" required="required"/>
-                    </label>
-                </div>   
-                <button type="submit">Submit </button>   
-            </form> 
-          <!-------------END : Login Form----------------------->
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!------------- END : Title Block------------->
-</template>
 <style scoped>
 .common-hero {
     height: 770px;

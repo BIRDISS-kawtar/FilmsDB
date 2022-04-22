@@ -9,11 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 // The default content 
-const app = createApp(App).use(store).use(Paginate);
-
-app.use(router);
-
-app.mount("#app");
+const app = createApp(App);
 
 const firebaseConfig = {
   apiKey: "AIzaSyAPpU4VBh4FFhVKP1zG1ASIxKxM_zCQETg",
@@ -29,7 +25,13 @@ const firebaseConfig = {
 const appFire = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(appFire);
+const db = getFirestore(appFire)
+
+app.use(router); 
+app.use(store); 
+app.use(Paginate);
+
+app.mount("#app");
 
 export default db;
 
