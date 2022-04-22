@@ -1,62 +1,3 @@
-<script>
-import Paginate from 'vuejs-paginate-next'; // Pagination
-export default {
-
-  name: "get-trending-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
-  
-  /*---------The data to use in the template and in other components---------*/
-  data() {
-    return {
-        total_pages_trending_movies: 0,
-        total_results_trending_movies:0,
-        trending_movies: null,
-        errorMessage: null
-    };
-    },
-  components: {
-        paginate: Paginate,
-    },
-  methods: {
-      // Fetch from api in function of the PageNum in
-      fetchPage (pageNum){
-
-        // Creating the request in function o the selected page in pagination
-        var numCurrentPage = 1;
-        if((typeof pageNum) == 'number'){
-            numCurrentPage = pageNum;
-        }
-        let numCurrentPage_toString = numCurrentPage.toString() ;
-        let request_trending = "https://api.themoviedb.org/3/trending/all/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
-        
-        // GET request using fetch with error handling
-        fetch(request_trending)
-        .then(async response => {
-            const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
-
-            // check for error response
-            if (!response.ok) {
-            const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
-            return Promise.reject(error);
-            }
-            // continue if there is any error
-            this.trending_movies = data.results;// stock values of fetched movies in a list of objects
-            this.total_pages_trending_movies = data.total_pages;
-            this.total_results_trending_movies = data.total_results;
-            console.log("selected page",pageNum);
-            console.log(data);
-
-        })
-        .catch(error => {
-            this.errorMessage = error;
-            console.error("There was an error!", error);
-        });
-      },
-  },
-  mounted(){
-      this.fetchPage();
-  }
-};
-</script>
 <template>
 <!------------------------------ TRENDING MOVIES ----------------------------->
 <div class="page-single">
@@ -119,3 +60,63 @@ export default {
 </div>
 </div>
 </template>
+
+<script>
+import Paginate from 'vuejs-paginate-next'; // Pagination
+export default {
+
+  name: "get-trending-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
+  
+  /*---------The data to use in the template and in other components---------*/
+  data() {
+    return {
+        total_pages_trending_movies: 0,
+        total_results_trending_movies:0,
+        trending_movies: null,
+        errorMessage: null
+    };
+    },
+  components: {
+        paginate: Paginate,
+    },
+  methods: {
+      // Fetch from api in function of the PageNum in
+      fetchPage (pageNum){
+
+        // Creating the request in function o the selected page in pagination
+        var numCurrentPage = 1;
+        if((typeof pageNum) == 'number'){
+            numCurrentPage = pageNum;
+        }
+        let numCurrentPage_toString = numCurrentPage.toString() ;
+        let request_trending = "https://api.themoviedb.org/3/trending/all/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+        
+        // GET request using fetch with error handling
+        fetch(request_trending)
+        .then(async response => {
+            const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+
+            // check for error response
+            if (!response.ok) {
+            const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+            return Promise.reject(error);
+            }
+            // continue if there is any error
+            this.trending_movies = data.results;// stock values of fetched movies in a list of objects
+            this.total_pages_trending_movies = data.total_pages;
+            this.total_results_trending_movies = data.total_results;
+            console.log("selected page",pageNum);
+            console.log(data);
+
+        })
+        .catch(error => {
+            this.errorMessage = error;
+            console.error("There was an error!", error);
+        });
+      },
+  },
+  mounted(){
+      this.fetchPage();
+  }
+};
+</script>

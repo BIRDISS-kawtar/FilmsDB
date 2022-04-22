@@ -1,3 +1,12 @@
+<template>
+  <!----------- Navbar ----------->
+  <appNavbar></appNavbar>
+  <!----------- Content ----------->
+  <RouterView />
+  <!-----------Footer----------->
+  <appFooter></appFooter>
+</template>
+
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import appNavbar from "@/components/appNavbar.vue";
@@ -10,15 +19,6 @@ export default{
   },
 };
 </script>
-
-<template>
-  <!----------- Navbar ----------->
-  <appNavbar></appNavbar>
-  <!----------- Content ----------->
-  <RouterView />
-  <!-----------Footer----------->
-  <appFooter></appFooter>
-</template>
 
 <style>
 @import "./assets/css/style.css";
