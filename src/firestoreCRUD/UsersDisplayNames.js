@@ -1,5 +1,5 @@
 import db from '@/main';
-import { collection, query, where, getDocs, setDoc} from "firebase/firestore"; 
+import { collection, query, where, getDocs, setDoc, CollectionReference, DocumentReference} from "firebase/firestore"; 
 
 const UsersRef = collection(db, "Users");
 /*--------------------Users CRUD-------------------*/
@@ -7,7 +7,7 @@ class UsersDisplayNames {
   // Create
   createUser(user,userID) {
     let UserRef = collection(db,"Users",userID);
-    return setDoc(UsersRef,user);
+    return setDoc(UserRef,user);
   } 
   // Read
   /* getUser(userID){
