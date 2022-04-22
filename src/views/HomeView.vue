@@ -18,7 +18,7 @@
 </template>
 
 <script>
-// The content of the home view is splitted into components 
+// The content of the home view is splitted into components
 import GetGenres from "@/components/GetGenres.vue";
 import TrendingMovies from "@/components/TrendingMovies.vue"
 import TopRatedMovies from "@/components/TopRatedMovies.vue"
