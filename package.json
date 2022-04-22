@@ -12,6 +12,7 @@
     "firebase": "^9.6.10",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12",
+    "vuejs-paginate-next": "^1.0.2",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
