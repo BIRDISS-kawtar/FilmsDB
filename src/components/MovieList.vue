@@ -21,17 +21,17 @@
             <!---------------- List of the fetched movies : Trending -------------------->
             <div class="flex-wrap-movielist mv-grid-fw">
                 <!-- v-for directive for rendering based on an array --->
-                    <template v-for="movie_trending in movies" :key="movie_trending.id">
+                    <template v-for="movie in movies" :key="movie.id">
                         <!-----------------Movie Card ---------------------->
-                        <div v-if="movie_trending.media_type == 'movie'" class="movie-item-style-2 movie-item-style-1">
-                            <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie_trending.poster_path" alt="">
+                        <div v-if="movie.media_type == 'movie'" class="movie-item-style-2 movie-item-style-1">
+                            <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
                             <div class="hvr-inner">
                                 <a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
                             </div>
                             <div class="mv-item-infor">
-                                <h6 v-if="movie_trending.original_title"><a>{{movie_trending.original_title}}</a></h6>
+                                <h6 v-if="movie.original_title"><a>{{movie.original_title}}</a></h6>
                                 <h6 v-else><a>{{movie.name}}</a></h6>
-                                <p class="rate"><i class="ion-android-star"></i><span>{{movie_trending.vote_average}}</span> /10</p>
+                                <p class="rate"><i class="ion-android-star"></i><span>{{movie.vote_average}}</span> /10</p>
                             </div>
                         </div>
                         <!-----------------END : Movie Card ---------------------->
@@ -63,57 +63,90 @@
 
 <script>
 import Paginate from 'vuejs-paginate-next'; // Pagination
-export default {
 
-  name: "get-trending-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
+/* criteria class structure
+class movie_criteria {
+    type;
+    genre_id=null;
+}
+*/
+
+export default {
+    name: "get-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
   
-  /*---------The data to use in the template and in other components---------*/
-  data() {
-    return {
-        total_pages_movies: 0,
-        total_results_movies:0,
-        movies: null,
-        errorMessage: null
-    };
+    /*---------The data to use in the template and in other components---------*/
+    data() {
+        return {
+            criteria: null,
+            total_pages_movies: 0,
+            total_results_movies:0,
+            movies: null,
+            errorMessage: null
+        };
     },
-  components: {
+    components: {
         paginate: Paginate,
     },
-  methods: {
-      // Fetch from api in function of the PageNum in
-      fetchPage (pageNum){
-
-        // Creating the request in function o the selected page in pagination
-        var numCurrentPage = 1;
-        if((typeof pageNum) == 'number'){
-            numCurrentPage = pageNum;
-        }
-        let numCurrentPage_toString = numCurrentPage.toString() ;
-        let request = "https://api.themoviedb.org/3/trending/all/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
-        
-        // GET request using fetch with error handling
-        fetch(request)
-        .then(async response => {
-            const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
-
-            // check for error response
-            if (!response.ok) {
-            const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
-            return Promise.reject(error);
+    methods: {
+        // Fetch from api depending on the selected movie criteria and the page number
+        fetchPage (pageNum, criteria = null){
+            // Creating the request depending on the selected page in pagination
+            var numCurrentPage = 1;
+            if((typeof pageNum) == 'number'){
+                numCurrentPage = pageNum;
             }
-            // continue if there are no errors
-            this.movies = data.results;// stock values of fetched movies in a list of objects
-            this.total_pages_movies = data.total_pages;
-            this.total_results_movies = data.total_results;
-        })
-        .catch(error => {
-            this.errorMessage = error;
-            console.error("Error while retrieving movies", error);
-        });
-      },
-  },
-  mounted(){
-      this.fetchPage();
-  }
+            let movie_display_criteria = criteria;
+            if(movie_display_criteria == null){
+                movie_display_criteria = {
+                    type: "trending",
+                    genre_id: null
+                }
+            }
+            let numCurrentPage_toString = numCurrentPage.toString() ;
+            let url = "";
+            switch (movie_display_criteria.type){
+                case 'top_rated':
+                    console.log("displaying top rated movies");
+                    url = "https://api.themoviedb.org/3/movie/top_rated?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+                    break;
+                case 'genre':
+                    console.log(`displaying movies with genre id ${movie_display_criteria.genre_id}`);
+                    url = "https://api.themoviedb.org/3/discover/movie?api_key="+this.$store.getters.getApiKey+"$with_genres="+movie_display_criteria.genre_id+"&page="+numCurrentPage_toString;
+                    break;
+                case 'trending':
+                    console.log("displaying trending movies");
+                    url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+            }
+            url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+            // trending url : "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+            // genre url : https://api.themoviedb.org/3/discover/movie?api_key=18f0e56333fe7988fb15f351af41f492&with_genres=28&page=500
+            // top rated url : https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1
+            
+            // GET request using fetch with error handling
+            fetch(url)
+            .then(async response => {
+                const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+
+                // check for error response
+                if (!response.ok) {
+                const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+                return Promise.reject(error);
+                }
+                // continue if there are no errors
+                this.criteria = movie_display_criteria;
+                this.movies = data.results;// stock values of fetched movies in a list of objects
+                this.total_pages_movies = data.total_pages;
+                this.total_results_movies = data.total_results;
+            })
+            .catch(error => {
+                this.errorMessage = error;
+                console.error("Error while retrieving movies", error);
+            });
+        },
+    },
+    //lifecycle
+    mounted(){
+        this.fetchPage();
+    }
 };
 </script>
