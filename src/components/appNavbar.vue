@@ -1,8 +1,6 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import createStore from '@/store/index.js'
-/* --------- LOGOUT with firebase code ------------ */
-import { getAuth, signOut } from "firebase/auth";
 export default{
     props: { genres: Array},
   /*---------The data to use in the template and in other components---------*/
@@ -11,18 +9,6 @@ export default{
        current_selected_genre : null,
 	   genres_navbar: this.$store.getters.getGenres,
     };
-    },
-  methods: {
-    logout(){
-      const auth = getAuth();
-      signOut(auth).then(() => {
-        alert('Successfully logged out');
-        this.$router.push('/');
-      }).catch((error) => {
-        alert(error.message);
-        this.$router.push('/');
-      });
-    },
   },
   watch: { // Listener of onChange event of the state of store
     '$store.state.genres': {
@@ -81,7 +67,6 @@ export default{
 						<!-- TODO : search for loginLink and btn signupLink and rename them correctly--> 
 						<li class="loginLink"><RouterLink to="/login">Login</RouterLink></li>
 						<li class="loginLink"><RouterLink to="/signup">Sign Up</RouterLink></li>
-						<button class="btn signupLink" @click="logout">Logout</button>
 					</ul>
 					<!--------------END :On Right Items--------------->
 				</div>

@@ -2,7 +2,7 @@
 /* -------- SIGN UP with Firebase Code ---------- */
 // The necessary imports of firebase
 import { getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
-import UsersDisplayNames from "../firestoreCRUD/UsersDisplayNames";
+import UsersInfos from "../firestoreCRUD/UsersInfos";
 export default {
   data() {
     return {
@@ -12,14 +12,14 @@ export default {
     };
   },
   methods: {
-    setUserDisplayName(user){
-       if(user){
-         UsersDisplayNames.createUser(user)
+    setUserDisplayName(user,userID){
+       if(user && userID){
+         UsersInfos.createUser(user,userID)
           .then(() => {
             alert("Display Name added successfully!");
            })
           .catch(e => {
-            alert(e);
+            alert("Add DisplayName Error :"+e);
           });
        }
     },
@@ -30,10 +30,10 @@ export default {
         .then((userCredential) => {
           // Add display name in the firestore database
           var userSignedUp = {
-            userID:userCredential.user.uid,
             userDisplayName : this.fullname
           };
-          this.setUserDisplayName(userSignedUp);
+          var user_ID = userCredential.user.uid;
+          this.setUserDisplayName(userSignedUp,user_ID);
           // Redirection to the login page
           this.$router.push("/login");
         })
@@ -48,7 +48,7 @@ export default {
 </script>
 <template>
 <!------------- Title Block------------->
-<div class="hero common-hero">
+<div class="hero common-hero ytnvy">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -92,7 +92,7 @@ export default {
 <style scoped>
 .common-hero {
     height: 770px;
-    background: url(/public/images/uploads/user-hero-bg.jpg) repeat;
+    background: url('../assets/images/uploads/user-hero-bg.jpg') repeat;
 }
 .form-style-1 {
   height: 440px;
