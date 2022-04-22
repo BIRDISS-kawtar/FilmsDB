@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import { getAuth } from "firebase/auth";
+import HomeView from "@/views/HomeView.vue";
 
 /*-------------ROUTER CONFIGURATION -------------*/
 const router = createRouter({
@@ -10,13 +10,13 @@ const router = createRouter({
       // Lazy loaded
       path: "/login",
       name: "login",
-      component: () => import("../views/LoginView.vue"),
+      component: () => import("@/views/auth/LoginView.vue"),
     },
     {
       // Lazy loaded
       path: "/signup",
       name: "signup",
-      component: () => import("../views/SignUpView.vue"),
+      component: () => import("@/views/auth/SignUpView.vue"),
     },
     {
       // Eager loaded
@@ -28,7 +28,7 @@ const router = createRouter({
       // Lazy loaded
       path: "/dashboard",
       name: "dashboard",
-      component: () => import("../views/DashboardView.vue"),
+      component: () => import("@/views/DashboardView.vue"),
       meta: {
         authRequired: true,
       },

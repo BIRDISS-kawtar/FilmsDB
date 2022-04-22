@@ -20,9 +20,10 @@
 <script>
 // The content of the home view is splitted into components
 import GetGenres from "@/components/GetGenres.vue";
-import TrendingMovies from "@/components/TrendingMovies.vue"
-import TopRatedMovies from "@/components/TopRatedMovies.vue"
 import GenreMovies from "@/components/GenreMovies.vue";
+import TrendingMovies from "./TrendingMovies.vue"
+import TopRatedMovies from "./TopRatedMovies.vue"
+
 // Each imported child component must be registred inside the parent component
 export default {
   name: "home",

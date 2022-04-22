@@ -18,7 +18,7 @@
 
 <script>
 // The content of the dashboard view is splitted into components 
-import FavoriteMovies from "@/components/FavoriteMovies.vue"
+import FavoriteMovies from "./FavoriteMovies.vue"
 import UsersDisplayNames from "../firestoreCRUD/UsersDisplayNames";
 /*------- Get the current user crendentials ---------*/
 import { getAuth } from "firebase/auth";
