@@ -46,16 +46,17 @@
 </div>
 <!--------------- END : Dashboard Content Block -------------->
 </template>
-
+ 
 
 <script>
-// The content of the dashboard view is splitted into components 
-import FavoriteMovies from "./FavoriteMovies.vue"
-import UsersInfos from "@/firestoreCRUD/UsersInfos";
-/*------- Get the current user crendentials ---------*/
-import { getAuth } from "firebase/auth";
-/*------- END : Get the current user crendentials ---------*/
-// Each imported child component must be registred inside the parent component
+import FavoriteMovies from "@/components/FavoriteMovies.vue"
+import Profile from "@/components/Profile.vue"
+import { getAuth, signOut } from "firebase/auth";
+import UsersInfos from "../firestoreCRUD/UsersInfos";
+/*-------------- Get the current user ----------------*/ 
+const auth = getAuth();
+const user = auth.currentUser; 
+/*-------------- END :Get the current user ----------------*/ 
 export default {
   name: "dashboard",
   components: { // Each imported child component must be registred inside the parent component
@@ -105,4 +106,3 @@ export default {
 </script>
 
 
- 
