@@ -89,10 +89,10 @@ export default {
 				/*--------------END : Get and send the list of the user Favorite Movies-----*/
 				console.log("movie list "+typeof this.userFavoriteMoviesList);
 				if(isProxy(this.userFavoriteMoviesList)){ //this If() block is not really necessary
-					var userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
-					this.$store.commit('setMessage',userFavoriteMoviesListConverted);
+					let userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
+					console.log(userFavoriteMoviesListConverted);
+					this.$store.commit('setMessage',["favoriteMoviesList",userFavoriteMoviesListConverted]);
 				}	
-				console.log(userFavoriteMoviesListConverted);
 			
 			} else {
 				console.log("No such document!");
