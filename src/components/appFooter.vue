@@ -58,3 +58,19 @@
 </footer>
 <!-- end of footer section-->
 </template>
+
+
+<script>
+export default {
+	name: 'appFooter',
+
+	mounted() {
+		console.log("appFooter is mounted");
+		
+		this.$root.$on("movieType", (msg) => {
+			console.log(msg);
+		})
+	}
+}
+
+</script>

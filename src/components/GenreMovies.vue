@@ -52,8 +52,8 @@
 </template>
 
 <script>
-// Each imported child component must be registred inside the parent component
-export default {
-  name: "movies-by-genre",
-};
+	// Each imported child component must be registred inside the parent component
+	export default {
+	name: "movies-by-genre",
+	};
 </script>

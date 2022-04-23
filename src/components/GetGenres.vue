@@ -13,33 +13,33 @@ export default {
   },
   created() {
     // GET request using fetch with error handling
-    fetch("https://api.themoviedb.org/3/genre/movie/list?api_key="+this.$store.getters.getApiKey+"&language=en-US")
-      .then(async response => {
-        const data = await response.json();
+    // fetch("https://api.themoviedb.org/3/genre/movie/list?api_key="+this.$store.getters.getApiKey+"&language=en-US")
+    //   .then(async response => {
+    //     const data = await response.json();
 
-        // check for error response
-        if (!response.ok) {
-          // get error message from body or default to response statusText
-          const error = (data && data.message) || response.statusText;
-          return Promise.reject(error);
-        }
-        // continue if there is any error
-        // stock values of genres in an array to be used later
-        for(const genre of data.genres){
-            this.genres.push(genre.name);
-        }
-        console.log("++ done");
-        this.$store.commit("updateGenres",this.genres);
-        console.log("done");
-        for(const genre of this.$store.getters.getGenres){
-            console.log(genre);
-        }
-        console.log("done++");
-      })
-      .catch(error => {
-        this.errorMessage = error;
-        console.error("There was an error!", error);
-      });
+    //     // check for error response
+    //     if (!response.ok) {
+    //       // get error message from body or default to response statusText
+    //       const error = (data && data.message) || response.statusText;
+    //       return Promise.reject(error);
+    //     }
+    //     // continue if there is any error
+    //     // stock values of genres in an array to be used later
+    //     for(const genre of data.genres){
+    //         this.genres.push(genre.name);
+    //     }
+    //     console.log("++ done");
+    //     this.$store.commit("updateGenres",this.genres);
+    //     console.log("done");
+    //     for(const genre of this.$store.getters.getGenres){
+    //         console.log(genre);
+    //     }
+    //     console.log("done++");
+    //   })
+    //   .catch(error => {
+    //     this.errorMessage = error;
+    //     console.error("There was an error!", error);
+    //   });
   }
 };
 </script>

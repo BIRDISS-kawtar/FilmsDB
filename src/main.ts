@@ -8,6 +8,7 @@ import Paginate from "vuejs-paginate-next";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+
 // The default content 
 const app = createApp(App);
 

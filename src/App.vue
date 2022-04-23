@@ -11,13 +11,17 @@
 import { RouterLink, RouterView } from "vue-router";
 import appNavbar from "@/components/appNavbar.vue";
 import appFooter from "@/components/appFooter.vue"
-import createStore from '@/store/index.js'
 export default{
   components: {
      'appNavbar': appNavbar,
      'appFooter': appFooter
   },
 };
+
+
+
+
+
 </script>
 
 <style>
