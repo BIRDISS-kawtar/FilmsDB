@@ -8,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       // Eager loaded
-      path: "/",
+      path: "/home",
       name: "home",
       component: HomeView,
     },

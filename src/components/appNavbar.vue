@@ -63,7 +63,7 @@
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
-import { isProxy, toRaw } from "vue";
+import { toRaw } from "vue";
 
 export default {
 
@@ -75,10 +75,18 @@ export default {
 	},
 
 	created() {
+		
 		console.log("AppNavBar is created");
 
-		this.getGenres();
+		const default_movie_criteria = {
+			type: "trending", 
+		}
+
+		this.getGenres();	
+
+		this.$store.commit('setMessage', ["movie_criteria", default_movie_criteria]);
 		
+		this.$router.push("/home");
 	},
 
 	methods: {
@@ -139,27 +147,11 @@ export default {
 				this.$router.push('/');
 			});
 		},
-	},
-
-	watch: {
-		
-	},
-
+	}
 };
 </script>
 
 <style scoped>
-
-/* .nav button{
-	font-family: 'Dosis', sans-serif;
-	color: #ffffff;
-	font-weight: bold;
-	text-transform: uppercase;
-	border-radius: 5px;
-	border: none;
-	background-color: #dd003f;
-	cursor: pointer;
-} */
 
 .select-drop-down {
 	background-color: transparent; 
@@ -185,6 +177,4 @@ option:not(:checked) {
 	background-color: black;  
 	color: #abb7c4;
 }
-
-
 </style>
