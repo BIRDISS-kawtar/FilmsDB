@@ -3,11 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from './store';
 import Paginate from "vuejs-paginate-next";
-/*------------- ImportsFirebase Configuration---------------*/
+/*------------- Imports for Firebase Configuration---------------*/
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { browserLocalPersistence,getAuth, setPersistence } from "firebase/auth";
-/*------------- END: ImportsFirebase Configuration---------------*/
+/*------------- END: Imports for Firebase Configuration---------------*/
 
 // The default content 
 const app = createApp(App);
@@ -22,7 +22,7 @@ const firebaseConfig = {
   measurementId: "G-VR8SX73DHP"
 };
 
-// Initialize Firebase
+// Initialize Firebase, Authentication Instance and Persistence
 const appFire = initializeApp(firebaseConfig);
 const auth = getAuth(appFire);
 setPersistence(auth, browserLocalPersistence)

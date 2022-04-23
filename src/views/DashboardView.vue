@@ -50,7 +50,7 @@
 
 <script>
 import Profile from "@/components/Profile.vue"
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import UsersInfos from "@/firestoreCRUD/UsersInfos";
 import FavoriteMovies from "@/components/FavoriteMovies.vue";
 import { isProxy, toRaw } from 'vue';
@@ -81,14 +81,13 @@ export default {
 			if (docSnap.exists()) {
 				console.log("Document data:", docSnap.data());
 				this.userDisplayName = docSnap.data().userDisplayName; // Get user DisplayName 
-				//console.log("test "+typeof this.userFavoriteMoviesList+"and"+"");
 				/*--------------Get and send the list of the user Favorite Movies-----------*/
 				for(let movieID of Object.values(docSnap.data().moviesID)){
 					this.addToFavoriteMoviesList(movieID);
 				}
 				/*--------------END : Get and send the list of the user Favorite Movies-----*/
 				console.log("movie list "+typeof this.userFavoriteMoviesList);
-				if(isProxy(this.userFavoriteMoviesList)){ //this If() block is not really necessary
+				if(isProxy(this.userFavoriteMoviesList)){ 
 					let userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
 					console.log(userFavoriteMoviesListConverted);
 					this.$store.commit('setMessage',["favoriteMoviesList",userFavoriteMoviesListConverted]);
@@ -127,9 +126,6 @@ export default {
 			}
 			// continue if there is any error
 			this.userFavoriteMoviesList.push(data);
-			console.log("movie list "+typeof [] );
-			console.log("each element "+typeof data);
-			console.log(data);
 		})
 		.catch(error => {
 			this.errorMessage = error;
