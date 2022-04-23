@@ -73,7 +73,7 @@ let movie_criteria = {
 
 export default {
     name: "get-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
-  
+
     /*---------The data to use in the template and in other components---------*/
     data() {
         return {
