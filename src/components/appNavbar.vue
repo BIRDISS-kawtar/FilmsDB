@@ -25,7 +25,7 @@
 						<!--Trending Section -->
 						<li @click="setMovieCriteria('Trending')"><a href="#">Trending</a></li>
 						<!-----------Top Rated Section------------ -->
-						<li @click="setMovieCriteria('TopRated')"><a href="#">Top Rated</a></li>
+						<li @click="setMovieCriteria('Top_rated')"><a href="#">Top Rated</a></li>
 						
 						<!-----------Genres Section------------ -->
 						<li>
