@@ -19,9 +19,7 @@
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
 					<!--------------On Left Items--------------->
 					<ul id="tracked_choices" class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden">
-							<a href="#page-top"></a>
-						</li>
+						
 						<!--Trending Section -->
 						<li @click="setMovieCriteria('Trending')"><a href="#">Trending</a></li>
 						<!-----------Top Rated Section------------ -->
@@ -29,12 +27,14 @@
 						
 						<!-----------Genres Section------------ -->
 						<li>
-							<select @change="setMovieCriteria('genre', $event)">
-								<option>Genre</option>
+							<select class="select-drop-down" @change="setMovieCriteria('genre', $event)" v-model="selected">
+								<option v-bind:value="selected" hidden>Genre</option>
 								<option 
 									v-for="genre in JSON.parse(JSON.stringify(this.genres)).genres" :key="genre" 
 									:value="JSON.stringify({ genre_id: genre.id, genre_name: genre.name })"
-									>{{ genre.name }}
+									>
+									{{ genre.name }}
+									
 								</option>
 							</select>
 						</li>
@@ -55,7 +55,7 @@
 			
 			<!-- top search form -->
 			<div class="top-search">
-				<input type="text" placeholder="Search for a movie that you are looking for">
+				<input @change="setSearch($event)" type="text" placeholder="Search for a movie that you are looking for">
 			</div>
 		</div>
 	</header>
@@ -63,12 +63,14 @@
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
+import { isProxy, toRaw } from "vue";
 
 export default {
 
 	data() {
 		return {
-			genres: []
+			genres: [],
+			selected: "Genre"
 		};
 	},
 
@@ -80,6 +82,7 @@ export default {
 	},
 
 	methods: {
+		
 		getGenres() {
 			const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${this.$store.getters.getApiKey}&language=en-US`;
 			
@@ -108,15 +111,25 @@ export default {
 				Object.assign(movie_criteria, genreSelected);
 			}
 
+			this.$store.commit('setMessage', ["movie_criteria", movie_criteria]);
 
-			console.log(movie_criteria);
-			this.$store.commit('setMessage', movie_criteria);
+			//AYMANE : to retrieve the value use 
+			console.log(toRaw(this.$store.getters.getMessage));
+		},
 
-			//AYMANE : to retrieve the value use this.$store.getters.getMessage;
+		setSearch(event) {
+			const search_value = event.target.value;
+			
+			if (search_value) {
+				this.$store.commit('setMessage', ["search_value", search_value]);
+			}
+
+			//console.log(toRaw(this.$store.getters.getMessage));
 		},
 
 		logout() {
 			const auth = getAuth();
+			
 			signOut(auth)
 			.then(() => {
 				this.$router.push('/');
@@ -137,7 +150,7 @@ export default {
 
 <style scoped>
 
-.nav button{
+/* .nav button{
 	font-family: 'Dosis', sans-serif;
 	color: #ffffff;
 	font-weight: bold;
@@ -146,10 +159,32 @@ export default {
 	border: none;
 	background-color: #dd003f;
 	cursor: pointer;
+} */
+
+.select-drop-down {
+	background-color: transparent; 
+	border: none;
+	appearance: none;
+	font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    color: #abb7c4;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
+select:hover {
+	color: #dcf836;
+}
 
+select:focus {
+	color: #dd003f;
+}
 
+option:not(:checked) { 
+	background-color: black;  
+	color: #abb7c4;
+}
 
 
 </style>

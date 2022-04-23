@@ -73,7 +73,7 @@ export default {
 
 	methods: {
 		printMessage() {
-			console.log();			
+					
 		}
 	}
 }
