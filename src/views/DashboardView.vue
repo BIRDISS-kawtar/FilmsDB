@@ -124,6 +124,7 @@ export default {
 				console.log("movie list "+typeof this.userFavoriteMoviesList);
 				if(isProxy(this.userFavoriteMoviesList)){ //this If() block is not really necessary
 					var userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
+					//this.$store.commit();
 				}	
 				console.log(userFavoriteMoviesListConverted);
 			
