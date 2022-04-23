@@ -1,5 +1,5 @@
 <template>
-<!------------------------------ TRENDING MOVIES ----------------------------->
+<!------------------------------ MOVIES ----------------------------->
 <div class="page-single">
 <div class="container">
     <div class="row">
@@ -23,13 +23,14 @@
                 <!-- v-for directive for rendering based on an array --->
                     <template v-for="movie in movies" :key="movie.id">
                         <!-----------------Movie Card ---------------------->
-                        <div v-if="movie.media_type == 'movie'" class="movie-item-style-2 movie-item-style-1">
+                        <div class="movie-item-style-2 movie-item-style-1">
                             <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
                             <div class="hvr-inner">
                                 <a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
                             </div>
                             <div class="mv-item-infor">
-                                <h6 v-if="movie.original_title"><a>{{movie.original_title}}</a></h6>
+                                <h6 v-if="movie.title"><a>{{movie.title}}</a></h6>
+                                <h6 v-else-if="movie.original_title"><a>{{movie.original_title}}</a></h6>
                                 <h6 v-else><a>{{movie.name}}</a></h6>
                                 <p class="rate"><i class="ion-android-star"></i><span>{{movie.vote_average}}</span> /10</p>
                             </div>
@@ -64,12 +65,11 @@
 <script>
 import Paginate from 'vuejs-paginate-next'; // Pagination
 
-/* criteria class structure
-class movie_criteria {
-    type;
-    genre_id=null;
+let movie_criteria = {
+    type: "genre",
+    genre_id: 28
 }
-*/
+
 
 export default {
     name: "get-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
@@ -77,7 +77,7 @@ export default {
     /*---------The data to use in the template and in other components---------*/
     data() {
         return {
-            criteria: null,
+            criteria: movie_criteria,
             total_pages_movies: 0,
             total_results_movies:0,
             movies: null,
@@ -89,13 +89,13 @@ export default {
     },
     methods: {
         // Fetch from api depending on the selected movie criteria and the page number
-        fetchPage (pageNum, criteria = null){
+        fetchPage (pageNum){
             // Creating the request depending on the selected page in pagination
             var numCurrentPage = 1;
             if((typeof pageNum) == 'number'){
                 numCurrentPage = pageNum;
             }
-            let movie_display_criteria = criteria;
+            let movie_display_criteria = this.criteria;
             if(movie_display_criteria == null){
                 movie_display_criteria = {
                     type: "trending",
@@ -106,18 +106,20 @@ export default {
             let url = "";
             switch (movie_display_criteria.type){
                 case 'top_rated':
+                    this.choice = "Top Rated Movies";
                     console.log("displaying top rated movies");
                     url = "https://api.themoviedb.org/3/movie/top_rated?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
                     break;
                 case 'genre':
+                    this.choice = "";
                     console.log(`displaying movies with genre id ${movie_display_criteria.genre_id}`);
-                    url = "https://api.themoviedb.org/3/discover/movie?api_key="+this.$store.getters.getApiKey+"$with_genres="+movie_display_criteria.genre_id+"&page="+numCurrentPage_toString;
+                    url = "https://api.themoviedb.org/3/discover/movie?api_key="+this.$store.getters.getApiKey+"&with_genres="+movie_display_criteria.genre_id+"&page="+numCurrentPage_toString;
                     break;
                 case 'trending':
+                    this.choice = "Trending Movies";
                     console.log("displaying trending movies");
                     url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
             }
-            url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
             // trending url : "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
             // genre url : https://api.themoviedb.org/3/discover/movie?api_key=18f0e56333fe7988fb15f351af41f492&with_genres=28&page=500
             // top rated url : https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1
@@ -126,6 +128,7 @@ export default {
             fetch(url)
             .then(async response => {
                 const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+                console.log(data)
 
                 // check for error response
                 if (!response.ok) {
@@ -133,7 +136,7 @@ export default {
                 return Promise.reject(error);
                 }
                 // continue if there are no errors
-                this.criteria = movie_display_criteria;
+                //this.criteria = movie_display_criteria;
                 this.movies = data.results;// stock values of fetched movies in a list of objects
                 this.total_pages_movies = data.total_pages;
                 this.total_results_movies = data.total_results;
