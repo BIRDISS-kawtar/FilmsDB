@@ -34,7 +34,8 @@
 <script>
 /* -------- LOGIN with Firebase Code ---------- */
 // The necessary imports of firebase
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, setPersistence, signInWithEmailAndPassword, browserSessionPersistence } from "firebase/auth";
+import {auth} from '@/main';
 export default {
     data() {
         return {
@@ -45,20 +46,18 @@ export default {
     methods: {
         // The method login() is used after the On Submit event in the form
         login() {
-          const auth = getAuth();
           signInWithEmailAndPassword(auth, this.email, this.password)
-            .then((userCredential) => {
-              // Logged in
-              const user = userCredential.user;
-              alert('Successfully logged in !');
-              // Redirection to the login page
-              this.$router.push('/dashboard');
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              alert(errorMessage)
-            });
+          .then((userCredential) => {
+            // Logged in
+            // Redirection to the login page
+            this.$router.push('/dashboard');
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert("Error "+errorCode+" : "+errorMessage);
+          });
+          
         },
     },
 };

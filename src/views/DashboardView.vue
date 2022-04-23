@@ -55,7 +55,7 @@ import UsersInfos from "@/firestoreCRUD/UsersInfos";
 import FavoriteMovies from "@/components/FavoriteMovies.vue";
 import { isProxy, toRaw } from 'vue';
 /*-------------- Get the current user ----------------*/ 
-const auth = getAuth();
+import {auth} from '@/main';
 const user = auth.currentUser; 
 /*-------------- END :Get the current user ----------------*/ 
 export default {
@@ -70,6 +70,38 @@ export default {
 		activeComponent : "Profile",
 		userFavoriteMoviesList : new Array(),// To be sent to the component MovieList
 	};
+  },
+  created(){ // Once the dashboard page is loaded we get the display name of the current user
+	
+	if (user) {// User is signed in
+
+		/*--------------Users Infos Block-------------------*/
+		const docSnap = UsersInfos.getUserInfos(user.uid); 
+		docSnap.then(docSnap => {
+			if (docSnap.exists()) {
+				console.log("Document data:", docSnap.data());
+				this.userDisplayName = docSnap.data().userDisplayName; // Get user DisplayName 
+				//console.log("test "+typeof this.userFavoriteMoviesList+"and"+"");
+				/*--------------Get and send the list of the user Favorite Movies-----------*/
+				for(let movieID of Object.values(docSnap.data().moviesID)){
+					this.addToFavoriteMoviesList(movieID);
+				}
+				/*--------------END : Get and send the list of the user Favorite Movies-----*/
+				console.log("movie list "+typeof this.userFavoriteMoviesList);
+				if(isProxy(this.userFavoriteMoviesList)){ //this If() block is not really necessary
+					var userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
+					this.$store.commit('setMessage',userFavoriteMoviesListConverted);
+				}	
+				console.log(userFavoriteMoviesListConverted);
+			
+			} else {
+				console.log("No such document!");
+			}
+		});
+		/*--------------END : Users Infos Block-------------------*/	
+	} else {
+		alert("No user is signed in !"); // No user is signed in.
+	}
   },
   methods:{
 	logout(){ // Logout Method
@@ -103,38 +135,6 @@ export default {
 			this.errorMessage = error;
 			console.error("Error while fetching the details of the movie ID: "+movieID, error);
 		}); 
-	}
-  },
-  created(){ // Once the dashboard page is loaded we get the display name of the current user
-	
-	if (user) {// User is signed in
-
-		/*--------------Users Infos Block-------------------*/
-		const docSnap = UsersInfos.getUserInfos(user.uid); 
-		docSnap.then(docSnap => {
-			if (docSnap.exists()) {
-				console.log("Document data:", docSnap.data());
-				this.userDisplayName = docSnap.data().userDisplayName; // Get user DisplayName 
-				//console.log("test "+typeof this.userFavoriteMoviesList+"and"+"");
-				/*--------------Get and send the list of the user Favorite Movies-----------*/
-				for(let movieID of Object.values(docSnap.data().moviesID)){
-					this.addToFavoriteMoviesList(movieID);
-				}
-				/*--------------END : Get and send the list of the user Favorite Movies-----*/
-				console.log("movie list "+typeof this.userFavoriteMoviesList);
-				if(isProxy(this.userFavoriteMoviesList)){ //this If() block is not really necessary
-					var userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
-					this.$store.commit('setMessage',userFavoriteMoviesListConverted);
-				}	
-				console.log(userFavoriteMoviesListConverted);
-			
-			} else {
-				console.log("No such document!");
-			}
-		});
-		/*--------------END : Users Infos Block-------------------*/	
-	} else {
-		alert("No user is signed in !"); // No user is signed in.
 	}
   },
   

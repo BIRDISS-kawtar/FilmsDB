@@ -31,8 +31,9 @@
 							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
 							Genres<i class="fa fa-angle-down" aria-hidden="true"></i>
 							</a>
-							<ul v-for="genre in genres_navbar" :key="genre" class="dropdown-menu level1">		
-								<li><a>{{genre}}</a></li>
+							<ul class="dropdown-menu level1">		
+								<li><a>Genre 1</a></li>
+								<li><a>Genre 2</a></li>
 							</ul>
 						</li>
 						<!-----------END :Genres Section------------ -->
@@ -68,14 +69,7 @@ import createStore from '@/store/index.js'
 /* --------- LOGOUT with firebase code ------------ */
 import { getAuth, signOut } from "firebase/auth";
 export default{
-    props: { genres: Array},
   /*---------The data to use in the template and in other components---------*/
-  data() {
-    return {
-       current_selected_genre : null,
-	   genres_navbar: this.$store.getters.getGenres,
-    };
-    },
   methods: {
     logout(){
       const auth = getAuth();
@@ -88,15 +82,6 @@ export default{
       });
     },
   },
-  watch: { // Listener of onChange event of the state of store
-    '$store.state.genres': {
-		handler() {
-			this.genres_navbar = this.$store.getters.getGenres;
-            console.log("watch working");
-        }
-     }
-  },
-
 };
 //TODO :Track the chosen value of the on left items of the navbar
 </script>

@@ -44,7 +44,8 @@
 <script>
 /* -------- SIGN UP with Firebase Code ---------- */
 // The necessary imports of firebase
-import { getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import {auth} from '@/main';
 import UsersInfos from "@/firestoreCRUD/UsersInfos";
 export default {
   data() {
@@ -68,7 +69,6 @@ export default {
     },
     // The method signup() is used after the On Submit event in the form
     signup() {
-      const auth = getAuth();
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
           // Add display name in the firestore database

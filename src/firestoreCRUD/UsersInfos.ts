@@ -1,4 +1,4 @@
-import db from '@/main';
+import {db} from '@/main';
 import { doc, setDoc, getDoc} from "firebase/firestore"; 
 
 /*--------------------Users Infos CRUD-------------------*/

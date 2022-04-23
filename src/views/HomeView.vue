@@ -6,7 +6,6 @@
 			<div class="col-md-12">
 				<div class="hero-ct">
 					<h1> Films DB, All your favourite movies in one place ! </h1>
-          			<GetGenres /> <!-- GetGenres doesn't display anything but it's called here to get the list of genres-->
 				</div>
 			</div>
 		</div>
@@ -19,8 +18,6 @@
 
 <script>
 // The content of the home view is splitted into components
-import GetGenres from "@/components/GetGenres.vue";
-import GenreMovies from "@/components/GenreMovies.vue";
 import TrendingMovies from "./TrendingMovies.vue"
 import TopRatedMovies from "./TopRatedMovies.vue"
 
@@ -28,10 +25,8 @@ import TopRatedMovies from "./TopRatedMovies.vue"
 export default {
   name: "home",
   components: {
-   GetGenres,
    TrendingMovies,
-   TopRatedMovies,
-   GenreMovies
+   TopRatedMovies
   }
 };
 </script>
