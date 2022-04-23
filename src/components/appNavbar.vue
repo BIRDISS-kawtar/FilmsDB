@@ -21,9 +21,9 @@
 					<ul id="tracked_choices" class="nav navbar-nav flex-child-menu menu-left">
 						
 						<!--Trending Section -->
-						<li @click="setMovieCriteria('Trending')"><a href="#">Trending</a></li>
+						<li @click="setMovieCriteria('trending')"><a href="#">Trending</a></li>
 						<!-----------Top Rated Section------------ -->
-						<li @click="setMovieCriteria('Top_rated')"><a href="#">Top Rated</a></li>
+						<li @click="setMovieCriteria('top_rated')"><a href="#">Top Rated</a></li>
 						
 						<!-----------Genres Section------------ -->
 						<li>
@@ -56,6 +56,7 @@
 			<!-- top search form -->
 			<div class="top-search">
 				<input @change="setSearch($event)" type="text" placeholder="Search for a movie that you are looking for">
+				{{test}}
 			</div>
 		</div>
 	</header>
@@ -70,6 +71,7 @@ export default {
 	data() {
 		return {
 			genres: [],
+			test: "",
 			selected: "Genre"
 		};
 	},
@@ -120,7 +122,6 @@ export default {
 			}
 
 			this.$store.commit('setMessage', ["movie_criteria", movie_criteria]);
-
 			//AYMANE : to retrieve the value use 
 			console.log(toRaw(this.$store.getters.getMessage));
 		},
@@ -132,7 +133,7 @@ export default {
 				this.$store.commit('setMessage', ["search_value", search_value]);
 			}
 
-			//console.log(toRaw(this.$store.getters.getMessage));
+			console.log(toRaw(this.$store.getters.getMessage));
 		},
 
 		logout() {
@@ -147,6 +148,8 @@ export default {
 				this.$router.push('/');
 			});
 		},
+
+		
 	}
 };
 </script>

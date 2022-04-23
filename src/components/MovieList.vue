@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { isProxy, toRaw } from '@vue/reactivity';
 import Paginate from 'vuejs-paginate-next'; // Pagination
 
 export default {
@@ -98,39 +99,26 @@ export default {
             
             // Creating the request depending on the selected page in pagination
             let numCurrentPage = 1;
+            let url = "";
+            let movie_display_criteria = this.movie_criteria;
+            
             
             if((typeof pageNum) == 'number'){
                 numCurrentPage = pageNum;
             }
-            
-            let movie_display_criteria = this.movie_criteria;
-            
-            if (movie_display_criteria == null) {
-                
-                movie_display_criteria = {
-                    type: "trending",
-                    genre_id: null
-                }
-            }
-            
-            let numCurrentPage_toString = numCurrentPage.toString() ;
-            
 
-            let url = "";
+            let numCurrentPage_toString = numCurrentPage.toString();
             
-            switch (movie_display_criteria.type){
+            switch (toRaw(movie_display_criteria).type){
                 case 'top_rated':
-                    this.choice = "Top Rated Movies";
                     console.log("displaying top rated movies");
                     url = "https://api.themoviedb.org/3/movie/top_rated?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
                     break;
                 case 'genre':
-                    this.choice = "";
                     console.log(`displaying movies with genre id ${movie_display_criteria.genre_id}`);
                     url = "https://api.themoviedb.org/3/discover/movie?api_key="+this.$store.getters.getApiKey+"&with_genres="+movie_display_criteria.genre_id+"&page="+numCurrentPage_toString;
                     break;
                 case 'trending':
-                    this.choice = "Trending Movies";
                     console.log("displaying trending movies");
                     url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
             }
@@ -146,8 +134,8 @@ export default {
 
                 // check for error response
                 if (!response.ok) {
-                const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
-                return Promise.reject(error);
+                    const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+                    return Promise.reject(error);
                 }
                 // continue if there are no errors
                 //this.movie_criteria = movie_display_criteria;
@@ -163,12 +151,19 @@ export default {
     },
 
     watch: {
-        '$store': {
-            handler() {
-                console.log("watch routing");
-            }
-        }
-    }
+		'$store.state': {
+			handler(newValue) {
+                if (isProxy(newValue)) {
+                    const movie_criteria_new_value = toRaw(newValue).message["movie_criteria"];
+                    this.movie_criteria = movie_criteria_new_value;
+                    console.log(this.movie_criteria);
+                    this.fetchPage();
+                }
+			},
+			deep: true
+		},
+		
+	}
     
 };
 </script>
