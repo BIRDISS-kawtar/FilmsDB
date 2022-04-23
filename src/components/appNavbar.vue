@@ -23,23 +23,21 @@
 							<a href="#page-top"></a>
 						</li>
 						<!--Trending Section -->
-						<li @click="setMovieType('Trending')"><a href="#">Trending</a></li>
+						<li @click="setMovieCriteria('Trending')"><a href="#">Trending</a></li>
 						<!-----------Top Rated Section------------ -->
-						<li @click="setMovieType('TopRated')"><a href="#">Top Rated</a></li>
+						<li @click="setMovieCriteria('TopRated')"><a href="#">Top Rated</a></li>
 						
 						<!-----------Genres Section------------ -->
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							Genres
-							<i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">		
-								<li v-for="genre in genres" :key="genre" >
-									<a>{{genre}}</a>
-								</li>
-							</ul>
+						<li>
+							<select @change="setMovieCriteria('genre', $event)">
+								<option>Genre</option>
+								<option 
+									v-for="genre in JSON.parse(JSON.stringify(this.genres)).genres" :key="genre" 
+									:value="JSON.stringify({ genre_id: genre.id, genre_name: genre.name })"
+									>{{ genre.name }}
+								</option>
+							</select>
 						</li>
-
 						<!-----------END :Genres Section------------ -->
 					</ul>
 					<!--------------END : On Left Items--------------->
@@ -67,15 +65,10 @@
 import { getAuth, signOut } from "firebase/auth";
 
 export default {
-	
+
 	data() {
 		return {
-			genres: [
-				'horror',
-				'fantasy',
-				'crime',
-				'action'
-			]
+			genres: []
 		};
 	},
 
@@ -95,17 +88,31 @@ export default {
 				return response.json();
 			})
 			.then(data => {
-				console.log(data);
-
-				//here
+				this.genres = data; 
+				console.log(this.genres);
 			})
 			.catch(error => {
 				console.log(error);
 			})
 		},
 
-		setMovieType(movieType) {
-			this.$root.$emit('movieType', movieType);
+		setMovieCriteria(movieType, event = null) {
+			
+			const genreSelected = (event) ? JSON.parse(event.target.value) : null;
+
+			const movie_criteria = {
+				type: movieType
+			};
+
+			if (genreSelected) {
+				Object.assign(movie_criteria, genreSelected);
+			}
+
+
+			console.log(movie_criteria);
+			this.$store.commit('setMessage', movie_criteria);
+
+			//AYMANE : to retrieve the value use this.$store.getters.getMessage;
 		},
 
 		logout() {

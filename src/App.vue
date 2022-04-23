@@ -17,11 +17,6 @@ export default{
      'appFooter': appFooter
   },
 };
-
-
-
-
-
 </script>
 
 <style>

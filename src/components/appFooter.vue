@@ -52,7 +52,7 @@
 			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
 		</div>
 		<div class="backtotop">
-			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+			<p><a href="#" id="back-to-top">Back to top<i class="ion-ios-arrow-thin-up"></i></a></p>
 		</div>
 	</div>
 </footer>
@@ -61,16 +61,22 @@
 
 
 <script>
+
+
 export default {
 	name: 'appFooter',
 
 	mounted() {
-		console.log("appFooter is mounted");
-		
-		this.$root.$on("movieType", (msg) => {
-			console.log(msg);
-		})
+		console.log("AppFooter is mounted");
+		this.printMessage();
+	},
+
+	methods: {
+		printMessage() {
+			console.log();			
+		}
 	}
 }
 
 </script>
+
