@@ -26,7 +26,7 @@
                         <div class="movie-item-style-2 movie-item-style-1">
                             <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
                             <div class="hvr-inner">
-                                <a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+                                <div class="ion-android-arrow-dropright"><RouterLink to="/moviedetails"> Read more </RouterLink></div>
                             </div>
                             <div class="mv-item-infor">
                                 <h6 v-if="movie.title"><a>{{movie.title}}</a></h6>
