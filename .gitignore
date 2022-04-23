@@ -27,6 +27,6 @@ coverage
 *.sln
 *.sw?
 
-# ignoring image and fonts files
+# ignoring image and fonts files 
 src/assets/images
 src/assets/fonts
