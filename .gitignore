@@ -29,3 +29,4 @@ coverage
 
 # ignoring image files
 src/assets/images
+src/assets/fonts
