@@ -60,7 +60,7 @@ export default {
        if(user && userID){
          UsersInfos.createUser(user,userID)
           .then(() => {
-            alert("Display Name added successfully!");
+            console.log("Display Name added successfully!");
            })
           .catch(e => {
             alert("Add DisplayName Error :"+e);
@@ -83,7 +83,7 @@ export default {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          alert(errorMessage);
+          alert("Error "+errorCode+" : "+errorMessage);
         });
     },
   },

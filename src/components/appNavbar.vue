@@ -68,22 +68,15 @@ import { RouterLink, RouterView } from "vue-router";
 import createStore from '@/store/index.js'
 /* --------- LOGOUT with firebase code ------------ */
 import { getAuth, signOut } from "firebase/auth";
+import {auth} from '@/main';
 export default{
-  /*---------The data to use in the template and in other components---------*/
-  methods: {
-    logout(){
-      const auth = getAuth();
-      signOut(auth).then(() => {
-        alert('Successfully logged out');
-        this.$router.push('/');
-      }).catch((error) => {
-        alert(error.message);
-        this.$router.push('/');
-      });
-    },
-  },
+	data(){
+		return{
+			user : auth.currentUser,
+		};
+	},
 };
-//TODO :Track the chosen value of the on left items of the navbar
+
 </script>
 
 <style scoped>

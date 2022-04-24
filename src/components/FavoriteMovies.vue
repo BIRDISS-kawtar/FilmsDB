@@ -50,7 +50,9 @@ export default {
             total_pages_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_pages,
             total_results_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_results,
             favorite_movies: null,
-            errorMessage: null
+            errorMessage: null,
+            start_slice : 0,
+            end_slice : 0,
         };
     },
     components: {
@@ -64,18 +66,18 @@ export default {
             if((typeof pageNum) == 'number'){
                 numCurrentPage = pageNum;
             }
-            const start = (numCurrentPage-1)*20;// Included
-            const end = (20*numCurrentPage);// Not Included
-            if(end > this.total_results_favorite_movies){// if the results of a page a less than 20
-                end = this.total_results_favorite_movies - 1; 
+            this.start_slice = (numCurrentPage-1)*20;// Included
+            this.end_slice = (20*numCurrentPage);// Not Included
+            if(this.end_slice > this.total_results_favorite_movies){// if the results of a page a less than 20
+                this.end_slice = this.total_results_favorite_movies; 
             }
-            console.log("min = ",start," and max = ",end," and total_results = ",this.total_results_favorite_movies); 
-            if(end != start){
+            console.log("min = ",this.start_slice," and max = ",this.end_slice," and total_results = ",this.total_results_favorite_movies); 
+            if(this.end_slice != this.start_slice){
                 console.log("case not equal ");
-                this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(start,end); 
+                this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(this.start_slice,this.end_slice); 
             }
             else{
-                this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(start); 
+                this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(this.start_slice); 
                 console.log("case equal");
             }
               

@@ -126,7 +126,7 @@ export default {
 		let request_getAmovie = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${this.$store.getters.getApiKey}&language=en-US`;
 		// GET request using fetch with error handling
 		fetch(request_getAmovie)
-		.then(async response => {
+		.then( async response => {
 			const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
 			// check for error response
 			if (!response.ok) {
@@ -141,6 +141,9 @@ export default {
 			console.error("Error while fetching the details of the movie ID: "+movieID, error);
 		}); 
 	}
+	/* addToFavorite(){
+		UsersInfos.addToFavorite(user.uid,648579);
+	} */
   },
   
 };
