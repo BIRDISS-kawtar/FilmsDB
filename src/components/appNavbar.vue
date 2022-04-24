@@ -98,7 +98,7 @@ export default {
 				this.genres = data; 	
 			})
 			.catch(error => {
-				
+				console.log(error);
 			})
 		},
 

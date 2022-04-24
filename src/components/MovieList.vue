@@ -62,8 +62,7 @@ export default {
             search_value: "",
             movies: [],
             total_pages_movies: 0,
-            total_results_movies:0,
-            errorMessage: null
+            total_results_movies:0
         };
     },
 
@@ -82,8 +81,6 @@ export default {
             
             let url = "";
 
-            
-            
             if (!pageNum) {
                 pageNum = 1;
             }
@@ -111,8 +108,7 @@ export default {
                 this.total_results_movies = data.total_results;
             })
             .catch(error => {
-                this.errorMessage = error;
-                console.error("Error while retrieving movies", error);
+                console.error(error);
             });
         },
     },
