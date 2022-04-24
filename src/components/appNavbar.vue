@@ -26,10 +26,9 @@
 						
 						<!-----------Genres Section------------ -->
 						<li>
-							<RouterLink to="/">
 							<select class="select-drop-down" @change="setMovieCriteria('genre', $event)" v-model="selected">
-								<option v-bind:value="selected" hidden disabled>Genre</option>
-								<option
+								<option v-bind:value="selected" hidden disabled><RouterLink to="/">Genre</RouterLink></option>
+								<option 
 									v-for="genre in JSON.parse(JSON.stringify(this.genres)).genres" :key="genre" 
 									:value="JSON.stringify({ genre_id: genre.id, genre_name: genre.name })"
 									>
@@ -37,7 +36,6 @@
 									
 								</option>
 							</select>
-							</RouterLink>
 						</li>
 						<!-----------END :Genres Section------------ -->
 					</ul>
