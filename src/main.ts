@@ -3,10 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from './store';
 import Paginate from "vuejs-paginate-next";
-// Code added for firebase configuration and intialization
-// Import the functions you need from the SDKs you need
+/*------------- Imports for Firebase Configuration---------------*/
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { browserLocalPersistence,getAuth, setPersistence } from "firebase/auth";
+/*------------- END: Imports for Firebase Configuration---------------*/
 
 // The default content 
 const app = createApp(App);
@@ -21,8 +22,19 @@ const firebaseConfig = {
   measurementId: "G-VR8SX73DHP"
 };
 
-// Initialize Firebase
+// Initialize Firebase, Authentication Instance and Persistence
 const appFire = initializeApp(firebaseConfig);
+const auth = getAuth(appFire);
+setPersistence(auth, browserLocalPersistence)
+.then(() => {
+  // Persistence setted succefully 
+})
+.catch((error) => {
+  // Handle Errors here.
+  const errorCode = error.code;
+  const errorMessage = error.message;
+  console.log("Error "+errorCode+" : "+errorMessage);
+});
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(appFire)
@@ -33,5 +45,5 @@ app.use(Paginate);
 
 app.mount("#app");
 
-export default db;
+export {db, auth};// share the firestore database and the authentication instance with components
 

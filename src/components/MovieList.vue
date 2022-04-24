@@ -18,7 +18,7 @@
                 </select>
             </div>
             <!---------------- END : Topbar Filter -------------------->
-            <!---------------- List of the fetched movies : Trending -------------------->
+            <!---------------- List of the fetched movies -------------------->
             <div class="flex-wrap-movielist mv-grid-fw">
                 <!-- v-for directive for rendering based on an array --->
                     <template v-for="movie in movies" :key="movie.id">
