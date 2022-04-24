@@ -21,14 +21,14 @@
 					<ul id="tracked_choices" class="nav navbar-nav flex-child-menu menu-left">
 						
 						<!--Trending Section -->
-						<li @click="setMovieCriteria('trending')"><a href="#">Trending</a></li>
+						<li @click="setMovieCriteria('trending')"><RouterLink to="/">Trending</RouterLink></li>
 						<!-----------Top Rated Section------------ -->
-						<li @click="setMovieCriteria('top_rated')"><a href="#">Top Rated</a></li>
+						<li  @click="setMovieCriteria('top_rated')"><RouterLink to="/">Top Rated</RouterLink></li>
 						
 						<!-----------Genres Section------------ -->
 						<li>
 							<select class="select-drop-down" @change="setMovieCriteria('genre', $event)" v-model="selected">
-								<option v-bind:value="selected" hidden disabled>Genre</option>
+								<option v-bind:value="selected" hidden disabled><RouterLink to="/">Genre</RouterLink></option>
 								<option 
 									v-for="genre in JSON.parse(JSON.stringify(this.genres)).genres" :key="genre" 
 									:value="JSON.stringify({ genre_id: genre.id, genre_name: genre.name })"
@@ -82,7 +82,7 @@ export default {
 
 		this.getGenres();	
 		this.$store.commit('setMessage', ["movie_criteria", default_movie_criteria]);
-		this.$router.push("/home");
+		//this.$router.push("/");
 	},
 
 	methods: {

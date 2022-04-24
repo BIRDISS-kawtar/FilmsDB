@@ -7,12 +7,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      // Eager loaded
-      path: "/home",
-      name: "home",
-      component: HomeView,
-    },
-    {
       // Lazy loaded
       path: "/login",
       name: "login",
@@ -24,7 +18,12 @@ const router = createRouter({
       name: "signup",
       component: () => import("@/views/auth/SignUpView.vue"),
     },
-    
+    {
+      // Eager loaded
+      path: "/",
+      name: "home",
+      component: HomeView,
+    },
     {
       // Lazy loaded
       path: "/dashboard",
