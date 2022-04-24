@@ -13,7 +13,7 @@
 							<span></span>
 						</div>
 				    </div>
-				    <a href="index-2.html"><img class="logo" src="/src/assets/images/logo1.png" alt="" width="119" height="58"></a>
+				    <RouterLink to="/"><img class="logo" src="/src/assets/images/logo1.png" alt="" width="119" height="58"></RouterLink>
 			    </div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">

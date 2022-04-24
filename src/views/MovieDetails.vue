@@ -46,11 +46,9 @@
 					<div class="movie-tabs">
 						<div class="tabs">
 							<ul class="tab-links tabs-mv">
-								<li class="active"><a href="#overview">Overview</a></li>
-								<li><a href="#reviews"> Reviews</a></li>
-								<li><a href="#cast">  Cast & Crew </a></li>
-								<li><a href="#media"> Media</a></li> 
-								<li><a href="#moviesrelated"> Related Movies</a></li>                        
+								<li :class="selection == '#overview' ? 'active' : ''"><a href="#overview" @click="tabsNavigation">Overview</a></li>
+								<li :class="selection == '#reviews' ? 'active' : ''"><a href="#reviews" @click="tabsNavigation"> Reviews</a></li>
+								<li :class="selection == '#cast' ? 'active' : ''"><a href="#cast" @click="tabsNavigation">  Cast & Crew </a></li>                       
 							</ul>
 						    <div class="tab-content">
 						        <div id="overview" class="tab active">
@@ -72,7 +70,7 @@
 											</div> -->
 											<div class="title-hd-sm">
 												<h4>cast</h4>
-												<a href="#" class="time">Full Cast & Crew  <i class="ion-ios-arrow-right"></i></a>
+												<a href="#cast" @click="tabsNavigation" class="time">Full Cast & Crew  <i class="ion-ios-arrow-right"></i></a>
 											</div>
 											<!-- movie cast -->
 											<div v-if="cast && cast.length > 6" class="mvcast-item">
@@ -101,7 +99,7 @@
 											</div>
 											<div class="title-hd-sm">
 												<h4>User reviews</h4>
-												<a href="#" class="time">See All {{total_reviews}} Reviews <i class="ion-ios-arrow-right"></i></a>
+												<a href="#reviews" @click="tabsNavigation" class="time">See All {{total_reviews}} Reviews <i class="ion-ios-arrow-right"></i></a>
 											</div>
 											<!-- movie user review -->
 											<!-- <template v-for="review in reviews" :key="review.id"> -->
@@ -273,16 +271,19 @@ export default {
 			movie_id: this.$route.query.movie_id,
 			reviews: null,
 			total_reviews: 0,
+			total_pages: 0,
 			cast: null,
 			crew: null,
 			directors: [],
 			writers: [],
-			errorMessage: ""
+			errorMessage: "",
+			selection: "#overview"
 		}
 	},
 	created(){
 		this.fetchMovieDetails();
 	},
+
 	components: {
         paginate: Paginate,
     },
@@ -324,6 +325,7 @@ export default {
 				// continue if there are no errors
 				this.reviews = data.results;
 				this.total_reviews = data.total_results;
+				this.total_pages = data.total_pages;
 			})
 			.catch(error => {
                 this.errorMessage = error;
@@ -380,6 +382,25 @@ export default {
                 this.errorMessage = error;
                 console.error("Error while retrieving movie reviews", error);
             });
+		},
+
+		tabsNavigation(event) {
+			
+			//let multiItem = $('.slick-multiItem');
+			//let multiItem2 = $('.slick-multiItem2');
+			//let currentAttrValue = $(this).attr('href');
+			let currentAttrValue = event.target.getAttribute('href');
+			this.selection = currentAttrValue;
+			console.log(currentAttrValue);
+			let tabsCurrent = $('.tabs ' + currentAttrValue);
+			// Show/Hide Tabs
+			tabsCurrent.show().siblings().hide();
+			// Change/remove current tab to active
+			//event.target.parentElement.addClass('active').siblings().removeClass('active');
+			event.preventDefault();
+			//reset position for tabs
+			//multiItem.slick('setPosition');
+			//multiItem2.slick('setPosition');
 		}
 	}
 };

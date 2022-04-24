@@ -52,12 +52,12 @@ $(function(){
 	var multiItem = $('.slick-multiItem');
 	var multiItem2 = $('.slick-multiItem2');
 	tabsClick.on('click', function(e)  {
-		var currentAttrValue = $(this).attr('href');
-		var tabsCurrent = $('.tabs ' + currentAttrValue);
+		//var currentAttrValue = $(this).attr('href');
+		//var tabsCurrent = $('.tabs ' + currentAttrValue);
 		// Show/Hide Tabs
-		tabsCurrent.show().siblings().hide();
+		//tabsCurrent.show().siblings().hide();
 		// Change/remove current tab to active
-		$(this).parent('li').addClass('active').siblings().removeClass('active');
+		//$(this).parent('li').addClass('active').siblings().removeClass('active');
 		e.preventDefault();
 		//reset position for tabs
 		multiItem.slick('setPosition');
