@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
+import MovieDetails from "../views/MovieDetails.vue";
 import {auth} from '@/main';
 
 /*-------------ROUTER CONFIGURATION -------------*/
@@ -23,6 +24,12 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+    },
+    {
+      // Eager loaded
+      path: "/moviedetails",
+      name: "movie_details",
+      component: MovieDetails
     },
     {
       // Lazy loaded

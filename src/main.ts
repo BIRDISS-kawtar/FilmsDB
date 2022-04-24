@@ -3,12 +3,15 @@ import App from "./App.vue";
 import router from "./router";
 import store from './store';
 import Paginate from "vuejs-paginate-next";
+import jQuery from "jquery";
 /*------------- Imports for Firebase Configuration---------------*/
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { browserLocalPersistence,getAuth, setPersistence } from "firebase/auth";
 /*------------- END: Imports for Firebase Configuration---------------*/
 
+const $ = jQuery;
+window["$"] = $;
 
 // The default content 
 const app = createApp(App);
