@@ -22,14 +22,14 @@
 					<div class="user-fav">
 						<p>Account Details</p>
 						<ul>
-							<li><a @click="activeComponent = 'Profile'">Profile</a></li>
+							<li><a href="#updateProfile" @click="activeComponent = 'Profile'">Profile</a></li>
 							<li><a @click="activeComponent = 'FavoriteMovies'">Favorite movies</a></li>
 						</ul>
 					</div>
 					<div class="user-fav">
 						<p>Others</p>
 						<ul>
-							<li><a>Change password</a></li>
+							<li><a href="#changePassword">Change password</a></li>
 							<li><a class="btn signupLink" @click="logout">Logout</a></li>
 						</ul>
 					</div>
@@ -68,8 +68,8 @@ export default {
 	return{
 		userDisplayName : "",
 		activeComponent : "Profile",
-		favoriteMovies : {},
-		userFavoriteMoviesList : new Array(),// To be sent to the component MovieList
+		favoriteMovies : {},// To be sent to the component FavoriteMovies = {list,total_results,total_pages} 
+		userFavoriteMoviesList : new Array(),
 	};
   },
   created(){ // Once the dashboard page is loaded we get the display name of the current user
@@ -80,28 +80,31 @@ export default {
 		const docSnap = UsersInfos.getUserInfos(user.uid); 
 		docSnap.then(docSnap => {
 			if (docSnap.exists()) {
+
 				console.log("Document data:", docSnap.data());
 				this.userDisplayName = docSnap.data().userDisplayName; // Get user DisplayName 
+
 				/*--------------Get and send the list of the user Favorite Movies-----------*/
 				if(docSnap.data().moviesID){
-					for(let movieID of Object.values(docSnap.data().moviesID)){
+					for(let movieID of Object.values(docSnap.data().moviesID)){// Fetch favorite movies by id stored in firestore and add them to a list
 						this.addToFavoriteMoviesList(movieID);
 					}
-					if(isProxy(this.userFavoriteMoviesList)){ 
+					if(isProxy(this.userFavoriteMoviesList)){ // The Reactivity in vue convert arrays to Proxy on affectation 
+						/*-------------------List of Favorite Movies---------------*/
 						this.favoriteMovies.list= toRaw(this.userFavoriteMoviesList);
+						/*---------------------Total results-----------------------*/
 						this.favoriteMovies.total_results = Object.keys(docSnap.data().moviesID).length;
+						/*---------------------Total pages-----------------------*/
 						if (Number.isInteger((Object.keys(docSnap.data().moviesID).length)/20)) {
 							this.favoriteMovies.total_pages = (Object.keys(docSnap.data().moviesID).length)/20;
 						}
 						else{
 							this.favoriteMovies.total_pages = ~~((Object.keys(docSnap.data().moviesID).length)/20)+1;
 						}
-						/* console.log(this.favoriteMovies.list);
-						console.log(this.favoriteMovies.total_results);
-						console.log(this.favoriteMovies.total_pages);
-						console.log(toRaw(this.favoriteMovies)); */
+						/*------------------Add the object favorite movies to store----------------*/
 						this.$store.commit('setMessage',["favoriteMoviesList",toRaw(this.favoriteMovies)]);
 					}	
+					
 				}else{
 					console.log("No Favorites Movies");
 				}
@@ -118,7 +121,6 @@ export default {
   methods:{
 	logout(){ // Logout Method
 		signOut(auth).then(() => {
-			alert('Successfully logged out');
 			this.$router.push('/');
 		}).catch((error) => {
 			alert("Error in logout"+error.message);
@@ -126,7 +128,6 @@ export default {
 		});
     },
 	addToFavoriteMoviesList(movieID){
-
 		let request_getAmovie = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${this.$store.getters.getApiKey}&language=en-US`;
 		// GET request using fetch with error handling
 		fetch(request_getAmovie)

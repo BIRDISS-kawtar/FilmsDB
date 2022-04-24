@@ -23,7 +23,9 @@ class UsersInfos {
           delete userProfile.value;
         }
     });
-    updateDoc(docRef,userProfile);
+    if(userProfile){
+      updateDoc(docRef,userProfile);
+    }
   }
   // Read
   getUserInfos(userID){

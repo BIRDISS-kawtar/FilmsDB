@@ -1,14 +1,14 @@
 <script>
 import UsersInfos from "@/firestoreCRUD/UsersInfos";
 import {auth} from '@/main';
-import { signOut, updateEmail, updatePassword,reauthenticateWithCredential,EmailAuthProvider, EmailAuthCredential} from "firebase/auth";
+import { signOut, updateEmail, updatePassword,reauthenticateWithCredential,EmailAuthProvider} from "firebase/auth";
 const user = auth.currentUser; // Logged in User
 export default {
   name: "profile", 
   data(){
     return{
-      userProfile : {},
       /*------ update profile ----------*/
+      userProfile : {},
       username : "", // is the userDisplayName
       firstname : "",
       lastname : "",
@@ -20,7 +20,7 @@ export default {
     };
   },
   created(){
-    /*----------------User Details From Firestore--------------------*/
+    /*----------------Get User Details From Firestore--------------------*/
     const docSnap = UsersInfos.getUserInfos(user.uid); 
     docSnap.then(docSnap => {
       if (docSnap.exists()) {
@@ -32,12 +32,11 @@ export default {
         console.log("No such document!");
       }
     });
-    /*----------------END :User Details From Firestore---------------*/
+    /*----------------END : Get User Details From Firestore---------------*/
   },
   methods: {
-    updateEmailOrPwd(email_bool,password_bool){
+    updateEmailOrPwd(email_bool,password_bool){// Update Email or Password
       if (email_bool){// Update Email
-        console.log("Old email :"+user.email);
         updateEmail(user, this.email)
         .then(() => {
           // Email updated!
@@ -58,24 +57,31 @@ export default {
         });
       }
     },
-    save(){
-      console.log("save");
-      UsersInfos.updateUserProfile(user.uid,this.userProfile);// Firestore
-      this.updateEmailOrPwd(true,false); // Firebase
+    save(){//update profile
+      /*------------------Update of Firestore Values-------------------------*/
+      UsersInfos.updateUserProfile(user.uid,this.userProfile);
+      /*------------------Update of Firebase Authentication Email------------*/
+      if(user.email != this.email){// To do not update even if the email is not updated
+        this.updateEmailOrPwd(true,false); // Firebase
+      }
     },
-    change(){
-      console.log("change");
-      /*------------------For Security Measures---------------*/
+    change(){//change password
+      /*------------Assuring that the old password is valid---------------*/
       try {
         const credential = EmailAuthProvider.credential(
         user.email,
         this.old_password
         );
         reauthenticateWithCredential(user, credential).then(() => {
-          // User re-authenticated.
+          // User re-authenticated
           console.log("Password verified");
+          if(this.new_password == this.confirm_new_password){
+            this.updateEmailOrPwd(false,true);
+          }else{
+            console.log("The passwords don't match, plaese retry again!");
+          }
         }).catch((errorlogin) => {
-          // User re-authenticated.
+          // User is logged out
           alert("Wrong Passwor Error",errorlogin);
           signOut(auth).then(() => {
             this.$router.push('/');
@@ -87,10 +93,10 @@ export default {
       } catch (error) {
         console.log("Wrong Password");
       }
-      /*------------------For Security Measures---------------*/
     },
   },
   watch: {
+    // set watchers to update only the changed values on profile
     username:{
       handler(newValue) {
         this.userProfile["userDisplayName"] = newValue;
@@ -119,7 +125,7 @@ export default {
 <template>
 <div class="form-style-1 user-pro">
   <!-----------------Profile Details-------------------->
-  <form class="user" @submit.prevent="save">
+  <form id="updateProfile" class="user" @submit.prevent="save">
     <h4>Profile details</h4>
     <div class="row">
       <div class="col-md-6 form-it">
@@ -149,7 +155,7 @@ export default {
   </form>
   <!-----------------END : Profile Details-------------->
   <!-----------------Change Password-------------------->
-  <form class="password" @submit.prevent="change">
+  <form id="changePassword" class="password" @submit.prevent="change">
     <h4>Change password</h4>
     <div class="row">
       <div class="col-md-6 form-it">
