@@ -16,7 +16,7 @@ export default{
 
   //lifecycle hooks
   mounted(){
-    //this.addExternalScripts();
+    this.addExternalScripts();
   },
   components: {
      'appNavbar': appNavbar,
@@ -45,7 +45,6 @@ export default{
 </script>
 
 <style>
+@import "./assets/css/plugins.css";
 @import "./assets/css/style.css";
-/* @import "./assets/css/plugins.css"; */
-
 </style>

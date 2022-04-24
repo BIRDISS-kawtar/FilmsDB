@@ -1,41 +1,4 @@
 <template>
-<!--[if IE 7]>
-<html class="ie ie7 no-js" lang="en-US">
-<![endif]-->
-<!--[if IE 8]>
-<html class="ie ie8 no-js" lang="en-US">
-<![endif]-->
-<!--[if !(IE 7) | !(IE 8)  ]><!-->
-<html lang="en" class="no-js">
-
-<!-- moviesingle07:38-->
-<head>
-	<!-- Basic need -->
-	<title>Open Pediatrics</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="author" content="">
-	<link rel="profile" href="#">
-
-    <!--Google Font-->
-    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
-	<!-- Mobile specific meta -->
-	<meta name=viewport content="width=device-width, initial-scale=1">
-	<meta name="format-detection" content="telephone-no">
-
-</head>
-<body>
-<!--preloading-->
-<!-- <div id="preloader">
-    <img class="logo" src="../assets/images/logo1.png" alt="" width="119" height="58">
-    <div id="status">
-        <span></span>
-        <span></span>
-    </div>
-</div> -->
-<!--end of preloading-->
-
 <div class="hero mv-single-hero">
 	<div class="container">
 		<div class="row">
@@ -54,53 +17,28 @@
 		<div class="row ipad-width2">
 			<div class="col-md-4 col-sm-12 col-xs-12">
 				<div class="movie-img sticky-sb">
-					<img src="../assets/images/uploads/movie-single.jpg" alt="">
+					<div v-if="movie.poster_path"><img :src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt=""></div>
+					<div v-else> <img src="" alt=""></div>
 					<div class="movie-btn">	
-						<div class="btn-transform transform-vertical red">
-							<div><a href="#" class="item item-1 redbtn"> <i class="ion-play"></i> Watch Trailer</a></div>
-							<div><a href="https://www.youtube.com/embed/o-0hcF97wy0" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
-						</div>
-						<div class="btn-transform transform-vertical">
-							<div><a href="#" class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a></div>
-							<div><a href="#" class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
 			<div class="col-md-8 col-sm-12 col-xs-12">
 				<div class="movie-single-ct main-content">
-					<h1 class="bd-hd">Skyfall: Quantum of Spectre <span>2015</span></h1>
-					<div class="social-btn">
-						<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
-						<div class="hover-bnt">
-							<a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
-							<div class="hvr-item">
-								<a href="#" class="hvr-grow"><i class="ion-social-facebook"></i></a>
-								<a href="#" class="hvr-grow"><i class="ion-social-twitter"></i></a>
-								<a href="#" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
-								<a href="#" class="hvr-grow"><i class="ion-social-youtube"></i></a>
-							</div>
-						</div>		
-					</div>
+					<h1 class="bd-hd">{{movie.title}}<span>{{movie_year}}</span></h1>
 					<div class="movie-rate">
 						<div class="rate">
 							<i class="ion-android-star"></i>
-							<p><span>8.1</span> /10<br>
-								<span class="rv">56 Reviews</span>
+							<p><span>{{movie.vote_average}}</span> /10<br>
+								<span class="rv">{{movie.vote_count}} Ratings</span>
 							</p>
 						</div>
-						<div class="rate-star">
-							<p>Rate This Movie:  </p>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star"></i>
-							<i class="ion-ios-star-outline"></i>
-						</div>
+					</div>
+					<div class="social-btn">
+						<div class="hover-bnt">
+							<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorits</a>
+						</div>		
 					</div>
 					<div class="movie-tabs">
 						<div class="tabs">
@@ -115,8 +53,8 @@
 						        <div id="overview" class="tab active">
 						            <div class="row">
 						            	<div class="col-md-8 col-sm-12 col-xs-12">
-						            		<p>Tony Stark creates the Ultron Program to protect the world, but when the peacekeeping program becomes hostile, The Avengers go into action to try and defeat a virtually impossible enemy together. Earth's mightiest heroes must come together once again to protect the world from global extinction.</p>
-						            		<div class="title-hd-sm">
+						            		<p>{{movie.overview}}</p>
+						            		<!-- <div class="title-hd-sm">
 												<h4>Videos & Photos</h4>
 												<a href="#" class="time">All 5 Videos & 245 Photos <i class="ion-ios-arrow-right"></i></a>
 											</div>
@@ -128,137 +66,71 @@
 													<img class="vd-img" src="../assets/images/uploads/image4.jpg" alt="">
 													<a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="../assets/images/uploads/play-vd.png" alt=""></a>
 												</div>
-											</div>
+											</div> -->
 											<div class="title-hd-sm">
 												<h4>cast</h4>
 												<a href="#" class="time">Full Cast & Crew  <i class="ion-ios-arrow-right"></i></a>
 											</div>
 											<!-- movie cast -->
-											<div class="mvcast-item">											
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast1.jpg" alt="">
-														<a href="#">Robert Downey Jr.</a>
+											<div class="mvcast-item">
+												<template v-for="actor in cast.slice(0,6)" :key="actor.id">											
+													<div class="cast-it">
+														<div class="cast-left">
+															<img v-if="actor.profile_path" :src="'https://image.tmdb.org/t/p/w45' + actor.profile_path" alt="">
+															<img v-else src="../assets/images/uploads/profile-unknown.jpg" alt="">
+															<a href="#">{{actor.name}}</a>
+														</div>
+														<p>{{actor.character}}</p>
 													</div>
-													<p>...  Robert Downey Jr.</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast2.jpg" alt="">
-														<a href="#">Chris Hemsworth</a>
-													</div>
-													<p>...  Thor</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast3.jpg" alt="">
-														<a href="#">Mark Ruffalo</a>
-													</div>
-													<p>...  Bruce Banner/ Hulk</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast4.jpg" alt="">
-														<a href="#">Chris Evans</a>
-													</div>
-													<p>...  Steve Rogers/ Captain America</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast5.jpg" alt="">
-														<a href="#">Scarlett Johansson</a>
-													</div>
-													<p>...  Natasha Romanoff/ Black Widow</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast6.jpg" alt="">
-														<a href="#">Jeremy Renner</a>
-													</div>
-													<p>...  Clint Barton/ Hawkeye</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast7.jpg" alt="">
-														<a href="#">James Spader</a>
-													</div>
-													<p>...  Ultron</p>
-												</div>
-												<div class="cast-it">
-													<div class="cast-left">
-														<img src="../assets/images/uploads/cast9.jpg" alt="">
-														<a href="#">Don Cheadle</a>
-													</div>
-													<p>...  James Rhodes/ War Machine</p>
-												</div>
+												</template>												
 											</div>
 											<div class="title-hd-sm">
 												<h4>User reviews</h4>
-												<a href="#" class="time">See All 56 Reviews <i class="ion-ios-arrow-right"></i></a>
+												<a href="#" class="time">See All {{total_reviews}} Reviews <i class="ion-ios-arrow-right"></i></a>
 											</div>
 											<!-- movie user review -->
-											<div class="mv-user-review-item">
-												<h3>Best Marvel movie in my opinion</h3>
-												<div class="no-star">
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star"></i>
-													<i class="ion-android-star last"></i>
+											<!-- <template v-for="review in reviews" :key="review.id"> -->
+												<div class="mv-user-review-item">
+													<p class="time">
+														{{reviews[0].created_at}}&nbsp;&nbsp;by&nbsp;&nbsp;<a href="#"> {{reviews[0].author_details.username}}</a>
+													</p>
+													<p>{{reviews[0].content.split(' ').slice(0,51).join(' ').concat(" [...]")}}</p>
 												</div>
-												<p class="time">
-													17 December 2016 by <a href="#"> hawaiipierson</a>
-												</p>
-												<p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
-											</div>
+											<!-- </template> -->
 						            	</div>
 						            	<div class="col-md-4 col-xs-12 col-sm-12">
 						            		<div class="sb-it">
 						            			<h6>Director: </h6>
-						            			<p><a href="#">Joss Whedon</a></p>
+												<p>
+													<template v-for="director in directors" :key="director.id">
+														<a href="#">{{director.name}}&nbsp;&nbsp;</a>
+													</template>
+												</p>
 						            		</div>
 						            		<div class="sb-it">
 						            			<h6>Writer: </h6>
-						            			<p><a href="#">Joss Whedon,</a> <a href="#">Stan Lee</a></p>
+						            			<p>
+													<template v-for="writer in writers" :key="writer.id">
+														<a href="#">{{writer.name}}&nbsp;&nbsp;</a>
+													</template>
+												</p>
 						            		</div>
 						            		<div class="sb-it">
-						            			<h6>Stars: </h6>
-						            			<p><a href="#">Robert Downey Jr,</a> <a href="#">Chris Evans,</a> <a href="#">Mark Ruffalo,</a><a href="#"> Scarlett Johansson</a></p>
-						            		</div>
-						            		<div class="sb-it">
-						            			<h6>Genres:</h6>
-						            			<p><a href="#">Action, </a> <a href="#"> Sci-Fi,</a> <a href="#">Adventure</a></p>
+						            			<h6>Genres: </h6>
+						            			<p>
+													<template v-for="genre in movie.genres" :key="genre.id">
+														<a href="#">{{genre.name}}&nbsp;</a>
+													</template>
+												</p>
 						            		</div>
 						            		<div class="sb-it">
 						            			<h6>Release Date:</h6>
-						            			<p>May 1, 2015 (U.S.A)</p>
+						            			<p>{{movie.release_date}}</p>
 						            		</div>
 						            		<div class="sb-it">
 						            			<h6>Run Time:</h6>
-						            			<p>141 min</p>
+						            			<p>{{movie.runtime}} min</p>
 						            		</div>
-						            		<div class="sb-it">
-						            			<h6>MMPA Rating:</h6>
-						            			<p>PG-13</p>
-						            		</div>
-						            		<div class="sb-it">
-						            			<h6>Plot Keywords:</h6>
-						            			<p class="tags">
-						            				<span class="time"><a href="#">superhero</a></span>
-													<span class="time"><a href="#">marvel universe</a></span>
-													<span class="time"><a href="#">comic</a></span>
-													<span class="time"><a href="#">blockbuster</a></span>
-													<span class="time"><a href="#">final battle</a></span>
-						            			</p>
-						            		</div>
-						            		<div class="ads">
-												<img src="../assets/images/uploads/ads1.png" alt="">
-											</div>
 						            	</div>
 						            </div>
 						        </div>
@@ -847,22 +719,86 @@
 		</div>
 	</div>
 </div>
-
-</body>
-
-<!-- moviesingle11:03-->
-</html>
 </template>
 
 <script>
 
 export default {
-  name: "movie_details",
-  data() {
-    return {
-    }
-  },
-  components: {
-  }
+	name: "movie_details",
+	data() {
+		return {
+			movie: null,
+			reviews: null,
+			total_reviews: 0,
+			cast: null,
+			directors: [],
+			writers: []
+		}
+	},
+	created(){
+		this.fetchMovieDetails(this.$route.query.movie_id);
+	},
+	methods: {
+		fetchMovieDetails(movie_id){
+			console.log("fetching ...");
+			let movie_overview_url = `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${this.$store.getters.getApiKey}`;
+			let movie_reviews_url = `https://api.themoviedb.org/3/movie/${movie_id}/reviews?api_key=${this.$store.getters.getApiKey}`;
+			let movie_credits_url =  `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${this.$store.getters.getApiKey}`; //crew and cast
+			let directors = [];
+			let writers = [];
+
+			fetch(movie_overview_url)
+			.then(async response => {
+				const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+				console.log(data)
+				// check for error response
+				if (!response.ok) {
+					const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+					return Promise.reject(error);
+				}
+				// continue if there are no errors
+				this.movie = data;
+			})
+
+			fetch(movie_reviews_url)
+			.then(async response => {
+				const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+				console.log(data)
+				// check for error response
+				if (!response.ok) {
+					const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+					return Promise.reject(error);
+				}
+				// continue if there are no errors
+				this.reviews = data.results;
+				this.total_reviews = data.total_results;
+			})
+
+			fetch(movie_credits_url)
+			.then(async response => {
+				const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+				console.log(data)
+				// check for error response
+				if (!response.ok) {
+					const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+					return Promise.reject(error);
+				}
+
+				data.crew.forEach(function(entry){
+					if (entry.job === 'Director') {
+						directors.push(entry);
+					}
+					else if (entry.job === 'Writer') {
+						writers.push(entry);
+					}
+				})
+				console.log(directors);
+				this.cast = data.cast;
+				this.directors = directors;
+				this.writers = writers;
+			})
+
+		}
+	}
 };
 </script>

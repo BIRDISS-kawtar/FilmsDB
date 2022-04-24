@@ -4030,7 +4030,7 @@ ul {
   color: #ffffff;
   font-weight: 700;
   text-transform: none;
-  margin-bottom: 25px;
+  margin-bottom: 50px;
 }
 .bd-hd span {
   font-family: 'Dosis', sans-serif;
@@ -4795,6 +4795,7 @@ ul {
 }
 .tabs ul.tabs-mv {
   padding: 20px 0;
+  margin-top: 65px;
   margin-bottom: 30px;
 }
 @media (max-width: 767px) {
@@ -5848,7 +5849,7 @@ ul {
   padding-left: 25px;
 }
 .page-single {
-  /* background-color: #020d18; */
+  background-color: #020d18;
   padding: 10px 0;
 }
 .social-btn {
@@ -5973,11 +5974,11 @@ ul {
 .movie-single .movie-img .movie-btn,
 .movie-single .mv-ceb .movie-btn {
   text-align: center;
-  padding: 18px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  background-color: #07101a;
-  border: 3px solid #0c1c2c;
+  /* background-color: #07101a; */
+  /* border: 3px solid #0c1c2c; */
 }
 .movie-single .movie-img .movie-btn a,
 .movie-single .mv-ceb .movie-btn a {

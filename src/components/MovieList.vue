@@ -26,7 +26,7 @@
                         <div class="movie-item-style-2 movie-item-style-1">
                             <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
                             <div class="hvr-inner">
-                                <div class="ion-android-arrow-dropright"><RouterLink to="/moviedetails"> Read more </RouterLink></div>
+                                <div class="ion-android-arrow-dropright"><RouterLink :to="{ path:'/moviedetails', query: { movie_id: movie.id }}"> Read more </RouterLink></div>
                             </div>
                             <div class="mv-item-infor">
                                 <h6 v-if="movie.title"><a>{{movie.title}}</a></h6>
@@ -66,7 +66,7 @@
 import Paginate from 'vuejs-paginate-next'; // Pagination
 
 let movie_criteria = {
-    type: "genre",
+    type: "top_rated",
     genre_id: 28
 }
 
@@ -128,7 +128,7 @@ export default {
             fetch(url)
             .then(async response => {
                 const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
-                console.log(data)
+                console.log(data);
 
                 // check for error response
                 if (!response.ok) {
@@ -148,7 +148,7 @@ export default {
         },
     },
     //lifecycle
-    mounted(){
+    created(){
         this.fetchPage();
     }
 };
