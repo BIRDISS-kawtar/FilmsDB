@@ -105,7 +105,7 @@ export default {
             this.total_pages_topRated_movies = data.total_pages;
             this.total_results_topRated_movies = data.total_results;
             
-            console.log(data);
+            
 
         })
         .catch(error => {

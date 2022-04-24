@@ -28,7 +28,7 @@
 						<!-----------Genres Section------------ -->
 						<li>
 							<select class="select-drop-down" @change="setMovieCriteria('genre', $event)" v-model="selected">
-								<option v-bind:value="selected" hidden>Genre</option>
+								<option v-bind:value="selected" hidden disabled>Genre</option>
 								<option 
 									v-for="genre in JSON.parse(JSON.stringify(this.genres)).genres" :key="genre" 
 									:value="JSON.stringify({ genre_id: genre.id, genre_name: genre.name })"
@@ -55,8 +55,7 @@
 			
 			<!-- top search form -->
 			<div class="top-search">
-				<input @change="setSearch($event)" type="text" placeholder="Search for a movie that you are looking for">
-				{{test}}
+				<input @change="setMovieCriteria('searched', $event)" type="text" placeholder="Search for a movie that you are looking for">
 			</div>
 		</div>
 	</header>
@@ -71,23 +70,18 @@ export default {
 	data() {
 		return {
 			genres: [],
-			test: "",
 			selected: "Genre"
 		};
 	},
 
 	created() {
 		
-		console.log("AppNavBar is created");
-
 		const default_movie_criteria = {
 			type: "trending", 
 		}
 
 		this.getGenres();	
-
 		this.$store.commit('setMessage', ["movie_criteria", default_movie_criteria]);
-		
 		this.$router.push("/home");
 	},
 
@@ -101,39 +95,34 @@ export default {
 				return response.json();
 			})
 			.then(data => {
-				this.genres = data; 
-				console.log(this.genres);
+				this.genres = data; 	
 			})
 			.catch(error => {
-				console.log(error);
+				
 			})
 		},
 
 		setMovieCriteria(movieType, event = null) {
 			
-			const genreSelected = (event) ? JSON.parse(event.target.value) : null;
-
-			const movie_criteria = {
+			
+			let movie_criteria = {
 				type: movieType
 			};
 
-			if (genreSelected) {
-				Object.assign(movie_criteria, genreSelected);
+			if (event) {
+				switch(movieType) {		
+					case "genre":
+						Object.assign(movie_criteria, JSON.parse(event.target.value));
+						break;
+					case "searched":
+						movie_criteria['search_value'] = event.target.value;
+						break;
+				}
 			}
+
+			
 
 			this.$store.commit('setMessage', ["movie_criteria", movie_criteria]);
-			//AYMANE : to retrieve the value use 
-			console.log(toRaw(this.$store.getters.getMessage));
-		},
-
-		setSearch(event) {
-			const search_value = event.target.value;
-			
-			if (search_value) {
-				this.$store.commit('setMessage', ["search_value", search_value]);
-			}
-
-			console.log(toRaw(this.$store.getters.getMessage));
 		},
 
 		logout() {
@@ -144,7 +133,7 @@ export default {
 				this.$router.push('/');
 			})
 			.catch((error) => {
-				console.log(error.message);
+				
 				this.$router.push('/');
 			});
 		},

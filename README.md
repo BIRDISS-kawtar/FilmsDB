@@ -9,4 +9,5 @@
 
 ## other tasks
 
-- [X] retrieve the value
+- [X] retrieve message from store and use watchers
+- [X] search movies

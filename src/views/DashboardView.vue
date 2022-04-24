@@ -88,10 +88,10 @@ export default {
 		const docSnap = UsersInfos.getUserInfos(user.uid); 
 		docSnap.then(docSnap => {
 			if (docSnap.exists()) {
-				console.log("Document data:", docSnap.data());
+				
 				this.userDisplayName = docSnap.data().userDisplayName;
 			} else {
-				console.log("No such document!");
+				
 			}
 		});
 		/*--------------END : Users Infos Block-------------------*/
