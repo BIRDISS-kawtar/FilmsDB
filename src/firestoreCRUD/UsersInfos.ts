@@ -14,6 +14,17 @@ class UsersInfos {
     const docRef = doc(db,"UserInfos",userID);
     updateDoc(docRef,{moviesID : arrayUnion(movieID)});
   }
+  updateUserProfile(userID,userProfile){
+    // The document ID is defined in the third argument
+    const docRef = doc(db,"UserInfos",userID);
+    // Remove empty entries before update
+    Object.keys(userProfile).forEach((value, index) => {
+        if(!userProfile.value){
+          delete userProfile.value;
+        }
+    });
+    updateDoc(docRef,userProfile);
+  }
   // Read
   getUserInfos(userID){
     const docRef = doc(db,"UserInfos",userID);
