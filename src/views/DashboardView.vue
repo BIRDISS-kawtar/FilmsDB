@@ -50,9 +50,9 @@
 
 <script>
 import Profile from "@/components/Profile.vue"
+import FavoriteMovies from "@/components/FavoriteMovies.vue";
 import { signOut } from "firebase/auth";
 import UsersInfos from "@/firestoreCRUD/UsersInfos";
-import FavoriteMovies from "@/components/FavoriteMovies.vue";
 import { isProxy, toRaw } from 'vue';
 /*-------------- Get the current user ----------------*/ 
 import {auth} from '@/main';
@@ -68,6 +68,7 @@ export default {
 	return{
 		userDisplayName : "",
 		activeComponent : "Profile",
+		favoriteMovies : {},
 		userFavoriteMoviesList : new Array(),// To be sent to the component MovieList
 	};
   },
@@ -85,14 +86,22 @@ export default {
 				for(let movieID of Object.values(docSnap.data().moviesID)){
 					this.addToFavoriteMoviesList(movieID);
 				}
-				/*--------------END : Get and send the list of the user Favorite Movies-----*/
-				console.log("movie list "+typeof this.userFavoriteMoviesList);
 				if(isProxy(this.userFavoriteMoviesList)){ 
-					let userFavoriteMoviesListConverted = toRaw(this.userFavoriteMoviesList);
-					console.log(userFavoriteMoviesListConverted);
-					this.$store.commit('setMessage',["favoriteMoviesList",userFavoriteMoviesListConverted]);
+					this.favoriteMovies.list= toRaw(this.userFavoriteMoviesList);
+					this.favoriteMovies.total_results = Object.keys(docSnap.data().moviesID).length;
+					if (Number.isInteger((Object.keys(docSnap.data().moviesID).length)/20)) {
+						this.favoriteMovies.total_pages = (Object.keys(docSnap.data().moviesID).length)/20;
+					}
+					else{
+						this.favoriteMovies.total_pages = ~~((Object.keys(docSnap.data().moviesID).length)/20)+1;
+					}
+					/* console.log(this.favoriteMovies.list);
+					console.log(this.favoriteMovies.total_results);
+					console.log(this.favoriteMovies.total_pages);
+					console.log(toRaw(this.favoriteMovies)); */
+					this.$store.commit('setMessage',["favoriteMoviesList",toRaw(this.favoriteMovies)]);
 				}	
-			
+				/*--------------END : Get and send the list of the user Favorite Movies-----*/
 			} else {
 				console.log("No such document!");
 			}
