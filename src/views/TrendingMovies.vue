@@ -105,8 +105,8 @@ export default {
             this.trending_movies = data.results;// stock values of fetched movies in a list of objects
             this.total_pages_trending_movies = data.total_pages;
             this.total_results_trending_movies = data.total_results;
-            console.log("selected page",pageNum);
-            console.log(data);
+            
+            
 
         })
         .catch(error => {

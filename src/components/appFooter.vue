@@ -5,9 +5,8 @@
 		<div class="flex-parent-ft">
 			<div class="flex-child-ft item1">
 				 <a href="index-2.html"><img class="logo" src="/src/assets/images/logo1.png" alt=""></a>
-				 <p>5th Avenue st, manhattan<br>
-				New York, NY 10001</p>
-				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
+				 <p> 7 rue Michel Calais, 62100</p>
+				<p>Call us: <a href="#">(+33) 34 41 71 05</a></p>
 			</div>
 			<div class="flex-child-ft item2">
 				<h4>Resources</h4>
@@ -61,22 +60,8 @@
 
 
 <script>
-
-
 export default {
 	name: 'appFooter',
-
-	mounted() {
-		console.log("AppFooter is mounted");
-		this.printMessage();
-	},
-
-	methods: {
-		printMessage() {
-			console.log();			
-		}
-	}
 }
-
 </script>
 

@@ -19,24 +19,26 @@
 				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
 					<!--------------On Left Items--------------->
 					<ul id="tracked_choices" class="nav navbar-nav flex-child-menu menu-left">
-						<li class="hidden">
-							<a href="#page-top"></a>
-						</li>
+						
 						<!--Trending Section -->
-						<li @click="setMovieCriteria('Trending')"><a href="#">Trending</a></li>
+						<li @click="setMovieCriteria('trending')"><RouterLink to="/">Trending</RouterLink></li>
 						<!-----------Top Rated Section------------ -->
-						<li @click="setMovieCriteria('Top_rated')"><a href="#">Top Rated</a></li>
+						<li  @click="setMovieCriteria('top_rated')"><RouterLink to="/">Top Rated</RouterLink></li>
 						
 						<!-----------Genres Section------------ -->
 						<li>
-							<select @change="setMovieCriteria('genre', $event)">
-								<option>Genre</option>
-								<option 
+							<RouterLink to="/">
+							<select class="select-drop-down" @change="setMovieCriteria('genre', $event)" v-model="selected">
+								<option v-bind:value="selected" hidden disabled>Genre</option>
+								<option
 									v-for="genre in JSON.parse(JSON.stringify(this.genres)).genres" :key="genre" 
 									:value="JSON.stringify({ genre_id: genre.id, genre_name: genre.name })"
-									>{{ genre.name }}
+									>
+									{{ genre.name }}
+									
 								</option>
 							</select>
+							</RouterLink>
 						</li>
 						<!-----------END :Genres Section------------ -->
 					</ul>
@@ -55,7 +57,7 @@
 			
 			<!-- top search form -->
 			<div class="top-search">
-				<input type="text" placeholder="Search for a movie that you are looking for">
+				<input @change="setMovieCriteria('searched', $event)" type="text" placeholder="Search for a movie that you are looking for">
 			</div>
 		</div>
 	</header>
@@ -63,23 +65,30 @@
 
 <script>
 import { getAuth, signOut } from "firebase/auth";
+import { toRaw } from "vue";
 
 export default {
 
 	data() {
 		return {
-			genres: []
+			genres: [],
+			selected: "Genre"
 		};
 	},
 
 	created() {
-		console.log("AppNavBar is created");
-
-		this.getGenres();
 		
+		const default_movie_criteria = {
+			type: "trending", 
+		}
+
+		this.getGenres();	
+		this.$store.commit('setMessage', ["movie_criteria", default_movie_criteria]);
+		//this.$router.push("/");
 	},
 
 	methods: {
+		
 		getGenres() {
 			const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${this.$store.getters.getApiKey}&language=en-US`;
 			
@@ -88,8 +97,7 @@ export default {
 				return response.json();
 			})
 			.then(data => {
-				this.genres = data; 
-				console.log(this.genres);
+				this.genres = data; 	
 			})
 			.catch(error => {
 				console.log(error);
@@ -98,58 +106,69 @@ export default {
 
 		setMovieCriteria(movieType, event = null) {
 			
-			const genreSelected = (event) ? JSON.parse(event.target.value) : null;
-
-			const movie_criteria = {
+			
+			let movie_criteria = {
 				type: movieType
 			};
 
-			if (genreSelected) {
-				Object.assign(movie_criteria, genreSelected);
+			if (event) {
+				switch(movieType) {		
+					case "genre":
+						Object.assign(movie_criteria, JSON.parse(event.target.value));
+						break;
+					case "searched":
+						movie_criteria['search_value'] = event.target.value;
+						break;
+				}
 			}
 
+			
 
-			console.log(movie_criteria);
-			this.$store.commit('setMessage', movie_criteria);
-
-			//AYMANE : to retrieve the value use this.$store.getters.getMessage;
+			this.$store.commit('setMessage', ["movie_criteria", movie_criteria]);
 		},
 
 		logout() {
 			const auth = getAuth();
+			
 			signOut(auth)
 			.then(() => {
 				this.$router.push('/');
 			})
 			.catch((error) => {
-				console.log(error.message);
+				
 				this.$router.push('/');
 			});
 		},
-	},
 
-	watch: {
 		
-	},
-
+	}
 };
 </script>
 
 <style scoped>
 
-.nav button{
-	font-family: 'Dosis', sans-serif;
-	color: #ffffff;
-	font-weight: bold;
-	text-transform: uppercase;
-	border-radius: 5px;
+.select-drop-down {
+	background-color: transparent; 
 	border: none;
-	background-color: #dd003f;
-	cursor: pointer;
+	appearance: none;
+	font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    color: #abb7c4;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
+select:hover {
+	color: #dcf836;
+}
 
+select:focus {
+	color: #dd003f;
+}
 
-
-
+option:not(:checked) { 
+	background-color: black;  
+	color: #abb7c4;
+}
 </style>

@@ -1,17 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { getAuth } from "firebase/auth";
 import HomeView from "@/views/HomeView.vue";
+import {auth} from '@/main';
 
 /*-------------ROUTER CONFIGURATION -------------*/
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      // Eager loaded
-      path: "/",
-      name: "home",
-      component: HomeView,
-    },
     {
       // Lazy loaded
       path: "/login",
@@ -24,7 +18,12 @@ const router = createRouter({
       name: "signup",
       component: () => import("@/views/auth/SignUpView.vue"),
     },
-    
+    {
+      // Eager loaded
+      path: "/",
+      name: "home",
+      component: HomeView,
+    },
     {
       // Lazy loaded
       path: "/dashboard",
@@ -39,23 +38,23 @@ const router = createRouter({
 
 // We add the beforeEach function  to check the authentication for some pages
 router.beforeEach((to, from, next) => {
-
+  
   // authRequired is the condition = if the current visited page (record) requires authentication 
   const authRequired = to.matched.some((record) => record.meta.authRequired);
-  // Returns the FirebaseAuth object for an App which is the gateway to the Firebase Authentication 
-  const auth = getAuth();
-
   if (authRequired) { 
-      if (auth.currentUser) { 
-          next();
+    auth.onAuthStateChanged(function(user) { // To prevent the problem currentuser == null
+      if (user) { 
+        next();
       } else {
-          alert('You must be logged in to see this page');
-          next({
-              path: '/login',
-          });
+        alert('You must be logged in to see this page');
+        next({
+            path: '/login',
+        });
       }
+    });
+      
   } else {
-      next();
+    next();
   }
 });
 

@@ -1,5 +1,5 @@
 <template>
-<!------------------------------ TRENDING MOVIES ----------------------------->
+<!------------------------------ MOVIES ----------------------------->
 <div class="page-single">
 <div class="container">
     <div class="row">
@@ -7,30 +7,21 @@
             <!---------------- Topbar Filter -------------------->
             <div class="topbar-filter fw">
                 <p>Found <span> {{total_results_movies}} movies</span> in total</p>
-                <label>Sort by:</label>
-                <select>
-                    <option value="popularity">Popularity Descending</option>
-                    <option value="popularity">Popularity Ascending</option>
-                    <option value="rating">Rating Descending</option>
-                    <option value="rating">Rating Ascending</option>
-                    <option value="date">Release date Descending</option>
-                    <option value="date">Release date Ascending</option>
-                </select>
             </div>
             <!---------------- END : Topbar Filter -------------------->
             <!---------------- List of the fetched movies : Trending -------------------->
             <div class="flex-wrap-movielist mv-grid-fw">
                 <!-- v-for directive for rendering based on an array --->
-                    <template v-for="movie in movies" :key="movie.id">
+                    <template v-for="movie in this.movies" :key="movie.id">
                         <!-----------------Movie Card ---------------------->
-                        <div v-if="movie.media_type == 'movie'" class="movie-item-style-2 movie-item-style-1">
+                        <div class="movie-item-style-2 movie-item-style-1">
                             <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
                             <div class="hvr-inner">
-                                <a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+                                <div class="ion-android-arrow-dropright"><RouterLink to="/moviedetails"> Read more </RouterLink></div>
                             </div>
                             <div class="mv-item-infor">
-                                <h6 v-if="movie.original_title"><a>{{movie.original_title}}</a></h6>
-                                <h6 v-else><a>{{movie.name}}</a></h6>
+                                <h6 v-if="movie.title"><a>{{movie.title}}</a></h6>
+                                <h6 v-else><a>{{movie.original_title}}</a></h6>
                                 <p class="rate"><i class="ion-android-star"></i><span>{{movie.vote_average}}</span> /10</p>
                             </div>
                         </div>
@@ -40,12 +31,6 @@
             <!---------------- END : List of the fetched movies : Trending -------------------->	
             <!---------------- Pagination and Navigation Bottom Bar -------------------->
             <div class="topbar-filter">
-                <label>Movies per page:</label>
-                <select>
-                    <option value="range">20 Movies</option>
-                    <option value="saab">10 Movies</option>
-                </select>
-
                 <div class="pagination2">
                     <paginate
                         :page-count="total_pages_movies"
@@ -62,91 +47,93 @@
 </template>
 
 <script>
+import { isProxy, toRaw } from '@vue/reactivity';
 import Paginate from 'vuejs-paginate-next'; // Pagination
-
-/* criteria class structure
-class movie_criteria {
-    type;
-    genre_id=null;
-}
-*/
 
 export default {
     name: "get-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
-  
+
     /*---------The data to use in the template and in other components---------*/
     data() {
         return {
-            criteria: null,
+            movie_criteria: {
+                "type": "trending"
+            },
+            search_value: "",
+            movies: [],
             total_pages_movies: 0,
-            total_results_movies:0,
-            movies: null,
-            errorMessage: null
+            total_results_movies:0
         };
     },
+
     components: {
         paginate: Paginate,
     },
+
+    //lifecycle
+    mounted() {  
+        this.fetchPage();
+    },
+
     methods: {
-        // Fetch from api depending on the selected movie criteria and the page number
-        fetchPage (pageNum, criteria = null){
-            // Creating the request depending on the selected page in pagination
-            var numCurrentPage = 1;
-            if((typeof pageNum) == 'number'){
-                numCurrentPage = pageNum;
-            }
-            let movie_display_criteria = criteria;
-            if(movie_display_criteria == null){
-                movie_display_criteria = {
-                    type: "trending",
-                    genre_id: null
-                }
-            }
-            let numCurrentPage_toString = numCurrentPage.toString() ;
+        // Fetch from api depending on the selected movie movie_criteria and the page number
+        fetchPage(pageNum) {
+            
             let url = "";
-            switch (movie_display_criteria.type){
+
+            if (!pageNum) {
+                pageNum = 1;
+            }
+
+            switch (this.movie_criteria.type) {
+                case 'trending':
+                    url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${this.$store.getters.getApiKey}&page=${pageNum}`;
+                    break;
                 case 'top_rated':
-                    console.log("displaying top rated movies");
-                    url = "https://api.themoviedb.org/3/movie/top_rated?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+                    url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${this.$store.getters.getApiKey}&page=${pageNum}`;
                     break;
                 case 'genre':
-                    console.log(`displaying movies with genre id ${movie_display_criteria.genre_id}`);
-                    url = "https://api.themoviedb.org/3/discover/movie?api_key="+this.$store.getters.getApiKey+"$with_genres="+movie_display_criteria.genre_id+"&page="+numCurrentPage_toString;
+                    url = `https://api.themoviedb.org/3/discover/movie?api_key=${this.$store.getters.getApiKey}&with_genres=${this.movie_criteria.genre_id}&page=${pageNum}`;
                     break;
-                case 'trending':
-                    console.log("displaying trending movies");
-                    url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
+                case 'searched':
+                    url = `https://api.themoviedb.org/3/search/movie?api_key=${this.$store.getters.getApiKey}&query=${this.movie_criteria.search_value}&page=${pageNum}`;
+                    break;
             }
-            url = "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
-            // trending url : "https://api.themoviedb.org/3/trending/movie/day?api_key="+this.$store.getters.getApiKey+"&page="+numCurrentPage_toString;
-            // genre url : https://api.themoviedb.org/3/discover/movie?api_key=18f0e56333fe7988fb15f351af41f492&with_genres=28&page=500
-            // top rated url : https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1
             
-            // GET request using fetch with error handling
             fetch(url)
             .then(async response => {
-                const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
-
-                // check for error response
-                if (!response.ok) {
-                const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
-                return Promise.reject(error);
-                }
-                // continue if there are no errors
-                this.criteria = movie_display_criteria;
-                this.movies = data.results;// stock values of fetched movies in a list of objects
+                const data = await response.json();
+                this.movies = data.results;
                 this.total_pages_movies = data.total_pages;
                 this.total_results_movies = data.total_results;
             })
             .catch(error => {
-                this.errorMessage = error;
-                console.error("Error while retrieving movies", error);
+                console.error(error);
             });
         },
     },
-    //lifecycle
-    mounted(){
-        this.fetchPage();
-    }
+
+    watch: {
+		'$store.state': {
+			handler(newValue) {
+                
+                if (isProxy(newValue)) {
+                    
+                    const message = toRaw(newValue).message;
+                    
+                    if ("movie_criteria" in message) {
+                        
+                        const movie_criteria_new_value = toRaw(newValue).message["movie_criteria"];
+                        this.movie_criteria = movie_criteria_new_value;
+                        this.$store.commit('deleteMessage', "movie_criteria"); //deleting the key from message will trigger again the watcher
+                        this.fetchPage();
+                    } 
+                }
+			},
+			deep: true
+		},
+		
+	}
+    
 };
 </script>

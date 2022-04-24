@@ -46,39 +46,31 @@
 </div>
 <!--------------- END : Dashboard Content Block -------------->
 </template>
-
+ 
 
 <script>
-// The content of the dashboard view is splitted into components 
-import FavoriteMovies from "./FavoriteMovies.vue"
+import Profile from "@/components/Profile.vue"
+import FavoriteMovies from "@/components/FavoriteMovies.vue";
+import { signOut } from "firebase/auth";
 import UsersInfos from "@/firestoreCRUD/UsersInfos";
-/*------- Get the current user crendentials ---------*/
-import { getAuth } from "firebase/auth";
-/*------- END : Get the current user crendentials ---------*/
-// Each imported child component must be registred inside the parent component
+import { isProxy, toRaw } from 'vue';
+/*-------------- Get the current user ----------------*/ 
+import {auth} from '@/main';
+const user = auth.currentUser; 
+/*-------------- END :Get the current user ----------------*/ 
 export default {
   name: "dashboard",
   components: { // Each imported child component must be registred inside the parent component
-   FavoriteMovies,
-   Profile
+  	Profile,
+	FavoriteMovies
   },
   data(){
-	  return{
-		  userDisplayName : "",
-		  activeComponent : "FavoriteMovies",
-		  userFavoriteMovies : new Array(),
-	  };
-  },
-  methods:{
-	  logout(){ // Logout Method
-		signOut(auth).then(() => {
-			alert('Successfully logged out');
-			this.$router.push('/');
-		}).catch((error) => {
-			alert(error.message);
-			this.$router.push('/');
-		});
-    },
+	return{
+		userDisplayName : "",
+		activeComponent : "Profile",
+		favoriteMovies : {},
+		userFavoriteMoviesList : new Array(),// To be sent to the component MovieList
+	};
   },
   created(){ // Once the dashboard page is loaded we get the display name of the current user
 	
@@ -89,20 +81,72 @@ export default {
 		docSnap.then(docSnap => {
 			if (docSnap.exists()) {
 				console.log("Document data:", docSnap.data());
-				this.userDisplayName = docSnap.data().userDisplayName;
+				this.userDisplayName = docSnap.data().userDisplayName; // Get user DisplayName 
+				/*--------------Get and send the list of the user Favorite Movies-----------*/
+				for(let movieID of Object.values(docSnap.data().moviesID)){
+					this.addToFavoriteMoviesList(movieID);
+				}
+				if(isProxy(this.userFavoriteMoviesList)){ 
+					this.favoriteMovies.list= toRaw(this.userFavoriteMoviesList);
+					this.favoriteMovies.total_results = Object.keys(docSnap.data().moviesID).length;
+					if (Number.isInteger((Object.keys(docSnap.data().moviesID).length)/20)) {
+						this.favoriteMovies.total_pages = (Object.keys(docSnap.data().moviesID).length)/20;
+					}
+					else{
+						this.favoriteMovies.total_pages = ~~((Object.keys(docSnap.data().moviesID).length)/20)+1;
+					}
+					/* console.log(this.favoriteMovies.list);
+					console.log(this.favoriteMovies.total_results);
+					console.log(this.favoriteMovies.total_pages);
+					console.log(toRaw(this.favoriteMovies)); */
+					this.$store.commit('setMessage',["favoriteMoviesList",toRaw(this.favoriteMovies)]);
+				}	
+				/*--------------END : Get and send the list of the user Favorite Movies-----*/
 			} else {
-				console.log("No such document!");
+				
 			}
 		});
-		/*--------------END : Users Infos Block-------------------*/
-		
+		/*--------------END : Users Infos Block-------------------*/	
 	} else {
 		alert("No user is signed in !"); // No user is signed in.
 	}
+  },
+  methods:{
+	logout(){ // Logout Method
+		signOut(auth).then(() => {
+			alert('Successfully logged out');
+			this.$router.push('/');
+		}).catch((error) => {
+			alert(error.message);
+			this.$router.push('/');
+		});
+    },
+	addToFavoriteMoviesList(movieID){
+
+		let request_getAmovie = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${this.$store.getters.getApiKey}&language=en-US`;
+		// GET request using fetch with error handling
+		fetch(request_getAmovie)
+		.then( async response => {
+			const data = await response.json(); // NB : response.json() parse the response as a json file but return a javascript object instead
+			// check for error response
+			if (!response.ok) {
+				const error = (data && data.message) || response.statusText;// get error message from body or default to response statusText
+				return Promise.reject(error);
+			}
+			// continue if there is any error
+			this.userFavoriteMoviesList.push(data);
+		})
+		.catch(error => {
+			this.errorMessage = error;
+			console.error("Error while fetching the details of the movie ID: "+movieID, error);
+		}); 
+	}
+	/* addToFavorite(){
+		UsersInfos.addToFavorite(user.uid,648579);
+	} */
   },
   
 };
 </script>
 
 
- 
