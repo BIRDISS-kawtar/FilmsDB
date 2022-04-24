@@ -7828,7 +7828,7 @@ header .navbar-default .flex-parent {
 @media (min-width: 992px) {
   header .navbar-default .flex-parent {
     display: flex !important;
-    justify-content: flex-start;
+    jutify-content: flex-start;
   }
 }
 header .navbar-default .flex-parent .menu-left {
@@ -8284,67 +8284,3 @@ footer.full-width-ft .ft-copyright {
   font-family: 'Dosis', sans-serif;
   font-weight: 700;
 }
-/*-----------------Signup and Login Style ------------------------*/
-.auth {
-  height: 770px;
-  background: url('../images/uploads/user-hero-bg.jpg') repeat;
-}
-.form-auth {
-  width: 934px;
-  margin-top: 200px;
-  margin-bottom: 50px;
-  background-color: #0b1a2a;
-  border: 3px solid #0f2133;
-  padding: 15px;
-}
-.form-auth label{
-  width: 700px;
-  font-size: 18px;
-  font-family: 'Dosis', sans-serif;
-  color: #abb7c4;
-  font-weight: bold;
-  text-transform: none;
-  margin-bottom: 10px;
-}
-.form-auth input{
-  width: 700px;
-  height: 40px;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 16px;
-  font-family: 'Nunito', sans-serif;
-  color: #abb7c4;
-  font-weight: 300;
-  text-transform: none;
-  background-color: #233a50;
-  border: none;
-  -webkit-border-radius: 3px !important;
-  -moz-border-radius: 3px !important;
-  border-radius: 3px !important;
-}
-.form-auth div{
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-.form-auth button{
-  font-family: 'Dosis', sans-serif;
-  font-size: 18px;
-  color: #ffffff;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 5px;
-  border: none;
-  background-color: #dd003f;
-  height: 42px;
-  width: 25%;
-  cursor: pointer;
-}
-.form-auth input::-webkit-input-placeholder {
-  color: #abb7c4;
-}
-.hero-ct-auth {
-  padding-top: 0px;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-/*---------------END : Signup and Login Style------------------------*/
