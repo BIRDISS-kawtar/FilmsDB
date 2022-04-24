@@ -9,6 +9,7 @@ import { getFirestore } from "firebase/firestore";
 import { browserLocalPersistence,getAuth, setPersistence } from "firebase/auth";
 /*------------- END: Imports for Firebase Configuration---------------*/
 
+
 // The default content 
 const app = createApp(App);
 

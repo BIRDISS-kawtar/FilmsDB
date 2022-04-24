@@ -5,9 +5,8 @@
 		<div class="flex-parent-ft">
 			<div class="flex-child-ft item1">
 				 <a href="index-2.html"><img class="logo" src="/src/assets/images/logo1.png" alt=""></a>
-				 <p>5th Avenue st, manhattan<br>
-				New York, NY 10001</p>
-				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
+				 <p> 7 rue Michel Calais, 62100</p>
+				<p>Call us: <a href="#">(+33) 34 41 71 05</a></p>
 			</div>
 			<div class="flex-child-ft item2">
 				<h4>Resources</h4>
@@ -52,9 +51,17 @@
 			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
 		</div>
 		<div class="backtotop">
-			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+			<p><a href="#" id="back-to-top">Back to top<i class="ion-ios-arrow-thin-up"></i></a></p>
 		</div>
 	</div>
 </footer>
 <!-- end of footer section-->
 </template>
+
+
+<script>
+export default {
+	name: 'appFooter',
+}
+</script>
+

@@ -24,6 +24,12 @@ export default createStore({
   mutations: {
     setMessage(state, [key, value]) {
       state.message[key] = value;
+    },
+    
+    deleteMessage(state, key) {
+      if (key in state.message) {
+        delete state.message[key];
+      }
     }
   },
 

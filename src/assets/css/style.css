@@ -2492,7 +2492,7 @@ tbody.collapse.in {
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #333;
+  color: #dd003f;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a,
@@ -5667,7 +5667,7 @@ ul {
   height: 598px;
 }
 .hero3 {
-  background-image: url('../images/uploads/celeb-hero-single.jpg') no-repeat;
+  background: url('../images/uploads/celeb-hero-single.jpg') no-repeat;
   height: 538px;
 }
 .common-hero {
@@ -5833,7 +5833,6 @@ ul {
   color: #ffffff;
   font-weight: bold;
   text-transform: uppercase;
-  cursor: pointer;
 }
 .user-information ul li a:hover {
   color: #dcf836;

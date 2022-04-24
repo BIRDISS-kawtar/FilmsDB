@@ -103,7 +103,7 @@ export default {
 				}	
 				/*--------------END : Get and send the list of the user Favorite Movies-----*/
 			} else {
-				console.log("No such document!");
+				
 			}
 		});
 		/*--------------END : Users Infos Block-------------------*/	
