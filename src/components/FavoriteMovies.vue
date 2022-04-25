@@ -46,18 +46,15 @@ export default {
 
     /*---------The data to use in the template and in other components---------*/
     data() {
-        if(toRaw(this.$store.getters.getMessage.favoriteMoviesList)){
-            return {
-                total_pages_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_pages,
-                total_results_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_results,
-                favorite_movies: null,
-                errorMessage: null,
-                start_slice : 0,
-                end_slice : 0,
-            };
-        }else{
-            console.log("No Favorite Movies !");
-        }  
+        return {
+            total_pages_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_pages,
+            total_results_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_results,
+            favorite_movies: null,
+            errorMessage: null,
+            start_slice : 0,
+            end_slice : 0,
+        };
+        
     },
     components: {
         paginate: Paginate,
