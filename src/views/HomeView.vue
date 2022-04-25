@@ -44,10 +44,10 @@ export default {
 					this.title = "Trending Movies";
 					break;
 				case 'genre':
-					this.title = movie_criteria_new_value.genre_name + " " + "Movies";
+					this.title = movie_criteria.genre_name + " " + "Movies";
 					break;
 				case 'searched':
-					this.title = "Your search results for" + " " + movie_criteria_new_value.search_value;
+					this.title = "Your search results for" + " " + movie_criteria.search_value;
 			}
 		}
 	},
@@ -55,7 +55,6 @@ export default {
 	watch: {
 		'$store.state': {
 			handler(newValue) {
-
                 if (isProxy(newValue)) {
 					
 					const message = toRaw(newValue).message;

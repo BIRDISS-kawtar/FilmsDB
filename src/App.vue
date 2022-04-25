@@ -15,7 +15,7 @@ export default{
 
   //lifecycle hooks
   mounted(){
-    this.addExternalScripts();
+    //this.addExternalScripts();
   },
   components: {
      'appNavbar': appNavbar,

@@ -116,7 +116,6 @@ export default {
     watch: {
 		'$store.state': {
 			handler(newValue) {
-                
                 if (isProxy(newValue)) {
                     
                     const message = toRaw(newValue).message;

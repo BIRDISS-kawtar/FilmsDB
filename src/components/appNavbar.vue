@@ -53,7 +53,8 @@
 			</nav>
 			
 			<!-- top search form -->
-			<div class="top-search">
+			
+			<div v-if="this.$route.name == 'home'" class="top-search">
 				<input @change="setMovieCriteria('searched', $event)" type="text" placeholder="Search for a movie that you are looking for">
 			</div>
 		</div>
@@ -81,7 +82,6 @@ export default {
 
 		this.getGenres();	
 		this.$store.commit('setMessage', ["movie_criteria", default_movie_criteria]);
-		//this.$router.push("/");
 	},
 
 	methods: {
@@ -120,8 +120,11 @@ export default {
 			}
 
 			
-
+			console.log(this.$store.getters.getMessage["movie_criteria"]);
 			this.$store.commit('setMessage', ["movie_criteria", movie_criteria]);
+			console.log(this.$store.getters.getMessage["movie_criteria"]);
+			this.$router.push("/");
+
 		},
 
 		logout() {

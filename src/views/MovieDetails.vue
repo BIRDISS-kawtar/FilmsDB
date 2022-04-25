@@ -289,7 +289,6 @@ export default {
     },
 	methods: {
 		fetchMovieDetails(){
-			console.log("fetching ...");
 			let movie_overview_url = `https://api.themoviedb.org/3/movie/${this.movie_id}?api_key=${this.$store.getters.getApiKey}`;
 			let movie_reviews_url = `https://api.themoviedb.org/3/movie/${this.movie_id}/reviews?api_key=${this.$store.getters.getApiKey}`;
 			let movie_credits_url =  `https://api.themoviedb.org/3/movie/${this.movie_id}/credits?api_key=${this.$store.getters.getApiKey}`; //crew and cast
@@ -391,7 +390,6 @@ export default {
 			//let currentAttrValue = $(this).attr('href');
 			let currentAttrValue = event.target.getAttribute('href');
 			this.selection = currentAttrValue;
-			console.log(currentAttrValue);
 			let tabsCurrent = $('.tabs ' + currentAttrValue);
 			// Show/Hide Tabs
 			tabsCurrent.show().siblings().hide();
