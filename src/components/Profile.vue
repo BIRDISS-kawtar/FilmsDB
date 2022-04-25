@@ -28,6 +28,11 @@
         <input class="submit" type="submit" value="save">
       </div>
     </div>	
+    <div class="row">
+      <div class="col-md-6">
+        <p v-if="this.saved">Profile Updated !</p>
+      </div>
+    </div>	
   </form>
   <!-----------------END : Profile Details-------------->
   <!-----------------Change Password-------------------->
@@ -55,7 +60,12 @@
       <div class="col-md-2">
         <input class="submit" type="submit" value="change">
       </div>
-    </div>	
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <p v-if="this.changed">Password Changed !</p>
+      </div>
+    </div>		
   </form>
   <!--------------END :Change Password------------------>
 </div>
@@ -76,10 +86,12 @@ export default {
       firstname : "",
       lastname : "",
       email : user.email,
+      saved : false,
       /*------- change password ---------*/
       old_password : "",
       new_password : "",
       confirm_new_password : "",
+      changed : false,
     };
   },
   created(){
@@ -104,6 +116,7 @@ export default {
         .then(() => {
           // Email updated!
           console.log("Email updated!");
+          this.saved = true;
         }).catch((error) => {
           // An error occurred
           alert("Error while updating email :"+ error);
@@ -114,6 +127,7 @@ export default {
         .then(() => {
           // Password updated!
           console.log("Passwoed updated!");
+          this.changed = true;
         }).catch((error) => {
           // An error ocurred
           alert("Error while updating password :"+ error);
@@ -123,17 +137,22 @@ export default {
     save(){//update profile
       /*------------------Update of Firestore Values-------------------------*/
       UsersInfos.updateUserProfile(user.uid,this.userProfile);
+      if(Object.keys(this.userProfile).length != 0 && this.userProfile.constructor === Object){
+        this.saved = true;
+      }
       /*------------------Update of Firebase Authentication Email------------*/
       if(user.email != this.email){// To do not update even if the email is not updated
+        console.log("update email block");
         this.updateEmailOrPwd(true,false); // Firebase
       }
+      
     },
     change(){//change password
       /*------------Assuring that the old password is valid---------------*/
       try {
         const credential = EmailAuthProvider.credential(
-        user.email,
-        this.old_password
+          user.email,
+          this.old_password
         );
         reauthenticateWithCredential(user, credential).then(() => {
           // User re-authenticated
@@ -141,7 +160,7 @@ export default {
           if(this.new_password == this.confirm_new_password){
             this.updateEmailOrPwd(false,true);
           }else{
-            console.log("The passwords don't match, plaese retry again!");
+            alert("The passwords don't match, please retry again!");
           }
         }).catch((errorlogin) => {
           // User is logged out
@@ -163,6 +182,7 @@ export default {
     username:{
       handler(newValue) {
         this.userProfile["userDisplayName"] = newValue;
+        this.saved = false;
         console.log(`username = ${newValue}`);
       },
       immediate: true
@@ -170,6 +190,7 @@ export default {
     firstname:{
       handler(newValue) {
         this.userProfile["userFirstName"] = newValue;
+        this.saved = false;
         console.log(`firstname = ${newValue}`);
       },
       immediate: true
@@ -177,10 +198,40 @@ export default {
     lastname:{
       handler(newValue) {
         this.userProfile["userLastName"] = newValue;
+        this.saved = false;
         console.log(`lastname = ${newValue}`);
+      },
+      immediate: true
+    },
+    email:{
+      handler(newValue) {
+        this.saved = false;
+        console.log(`email = ${newValue}`);
+      },
+      immediate: true
+    },
+    old_password:{
+      handler(newValue) {
+        this.changed = false;
+        console.log(`old_password = ${newValue}`);
+      },
+      immediate: true
+    },
+    new_password:{
+      handler(newValue) {
+        this.changed = false;
+        console.log(`new_password = ${newValue}`);
+      },
+      immediate: true
+    },
+    confirm_new_password:{
+      handler(newValue) {
+        this.changed = false;
+        console.log(`confirm_new_password = ${newValue}`);
       },
       immediate: true
     },
   }
 };
 </script>
+

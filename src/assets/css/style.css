@@ -8349,3 +8349,12 @@ footer.full-width-ft .ft-copyright {
   margin-right: 10%;
 }
 /*---------------END : Signup and Login Style------------------------*/
+.user-information ul li a {
+  cursor: pointer;
+}
+.user-information ul li a:hover {
+  cursor: pointer;
+}
+.user-information ul li.active a {
+  cursor: pointer;
+}
