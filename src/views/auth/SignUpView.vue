@@ -13,8 +13,14 @@
               	<h1> Sign Up </h1>   
                 <div class="row">
                     <label>
-                        Full Name
-                        <input type="text" placeholder="Full Name..." v-model="fullname" required="required"/>
+                        First Name
+                        <input type="text" placeholder="First Name..." v-model="firstname" required="required"/>
+                    </label>
+                </div>
+                <div class="row">
+                    <label>
+                        Last Name
+                        <input type="text" placeholder="Last Name..." v-model="lastname" required="required"/>
                     </label>
                 </div>
                 <div class="row">
@@ -50,7 +56,8 @@ import UsersInfos from "@/firestoreCRUD/UsersInfos";
 export default {
   data() {
     return {
-      fullname:"",
+      firstname:"",
+      lastname:"",
       email: "",
       password: "",
     };
@@ -73,7 +80,9 @@ export default {
         .then((userCredential) => {
           // Add display name in the firestore database
           var userSignedUp = {
-            userDisplayName : this.fullname
+            userDisplayName : this.firstname+" "+this.lastname,
+            userFirstName : this.firstname,
+            userLastName : this.lastname
           };
           var user_ID = userCredential.user.uid;
           this.setUserDisplayName(userSignedUp,user_ID);
@@ -92,6 +101,6 @@ export default {
 
 <style scoped>
 .form-auth {
-  height: 440px;
+  height: 520px;
 }
 </style>

@@ -12,18 +12,27 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: () => import("@/views/auth/LoginView.vue"),
+      meta: {
+        authRequired: false,
+      },
     },
     {
       // Lazy loaded
       path: "/signup",
       name: "signup",
       component: () => import("@/views/auth/SignUpView.vue"),
+      meta: {
+        authRequired: false,
+      },
     },
     {
       // Eager loaded
       path: "/",
       name: "home",
       component: HomeView,
+      meta: {
+        authRequired: false,
+      },
     },
     {
       // Eager loaded
@@ -53,7 +62,7 @@ router.beforeEach((to, from, next) => {
       if (user) { 
         next();
       } else {
-        alert('You must be logged in to see this page');
+        //alert('You must be logged in to see this page');
         next({
             path: '/login',
         });

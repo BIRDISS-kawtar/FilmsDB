@@ -54,6 +54,7 @@ export default {
             start_slice : 0,
             end_slice : 0,
         };
+        
     },
     components: {
         paginate: Paginate,
@@ -61,26 +62,29 @@ export default {
     methods: {
         // Fetch from the result of firestore the content of page by dividing by 20 movie per page
         getPageResults (pageNum){
-            // slicing the list of favorite movies depending of the PageNum
-            let numCurrentPage = 1;
-            if((typeof pageNum) == 'number'){
-                numCurrentPage = pageNum;
-            }
-            this.start_slice = (numCurrentPage-1)*20;// Included
-            this.end_slice = (20*numCurrentPage);// Not Included
-            if(this.end_slice > this.total_results_favorite_movies){// if the results of a page a less than 20
-                this.end_slice = this.total_results_favorite_movies; 
-            }
-            console.log("min = ",this.start_slice," and max = ",this.end_slice," and total_results = ",this.total_results_favorite_movies); 
-            if(this.end_slice != this.start_slice){
-                console.log("case not equal ");
-                this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(this.start_slice,this.end_slice); 
-            }
-            else{
-                this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(this.start_slice); 
-                console.log("case equal");
-            }
-              
+            if(toRaw(this.$store.getters.getMessage.favoriteMoviesList)){
+                 // slicing the list of favorite movies depending of the PageNum
+                let numCurrentPage = 1;
+                if((typeof pageNum) == 'number'){
+                    numCurrentPage = pageNum;
+                }
+                this.start_slice = (numCurrentPage-1)*20;// Included
+                this.end_slice = (20*numCurrentPage);// Not Included
+                if(this.end_slice > this.total_results_favorite_movies){// if the results of a page a less than 20
+                    this.end_slice = this.total_results_favorite_movies; 
+                }
+                console.log("min = ",this.start_slice," and max = ",this.end_slice," and total_results = ",this.total_results_favorite_movies); 
+                if(this.end_slice != this.start_slice){
+                    console.log("case not equal ");
+                    this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(this.start_slice,this.end_slice); 
+                }
+                else{
+                    this.favorite_movies = (Object.values(toRaw(this.$store.getters.getMessage.favoriteMoviesList).list)).slice(this.start_slice); 
+                    console.log("case equal");
+                }
+            }else{
+                console.log("No Favorite Movies !");
+            } 
         },
     },
     //lifecycle
