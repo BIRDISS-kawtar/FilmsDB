@@ -1,3 +1,66 @@
+<template>
+<div class="form-style-1 user-pro">
+  <!-----------------Profile Details-------------------->
+  <form id="updateProfile" class="user" @submit.prevent="save">
+    <h4>Profile details</h4>
+    <div class="row">
+      <div class="col-md-6 form-it">
+        <label>Username</label>
+        <input type="text" placeholder="Username" v-model="username">
+      </div>
+      <div class="col-md-6 form-it">
+        <label>Email Address</label>
+        <input type="text" placeholder="Email Address" v-model="email">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-it">
+        <label>First Name</label>
+        <input type="text" placeholder="First Name" v-model="firstname">
+      </div>
+      <div class="col-md-6 form-it">
+        <label>Last Name</label>
+        <input type="text" placeholder="Last Name" v-model="lastname">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <input class="submit" type="submit" value="save">
+      </div>
+    </div>	
+  </form>
+  <!-----------------END : Profile Details-------------->
+  <!-----------------Change Password-------------------->
+  <form id="changePassword" class="password" @submit.prevent="change">
+    <h4>Change password</h4>
+    <div class="row">
+      <div class="col-md-6 form-it">
+        <label>Old Password</label>
+        <input type="text" v-model="old_password" placeholder="**********">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-it">
+        <label>New Password</label>
+        <input type="text" v-model="new_password" placeholder="***************">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-it">
+        <label>Confirm New Password</label>
+        <input type="text" v-model="confirm_new_password" placeholder="*************** ">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <input class="submit" type="submit" value="change">
+      </div>
+    </div>	
+  </form>
+  <!--------------END :Change Password------------------>
+</div>
+</template>
+
 <script>
 import UsersInfos from "@/firestoreCRUD/UsersInfos";
 import {auth} from '@/main';
@@ -121,66 +184,3 @@ export default {
   }
 };
 </script>
-
-<template>
-<div class="form-style-1 user-pro">
-  <!-----------------Profile Details-------------------->
-  <form id="updateProfile" class="user" @submit.prevent="save">
-    <h4>Profile details</h4>
-    <div class="row">
-      <div class="col-md-6 form-it">
-        <label>Username</label>
-        <input type="text" placeholder="Username" v-model="username">
-      </div>
-      <div class="col-md-6 form-it">
-        <label>Email Address</label>
-        <input type="text" placeholder="Email Address" v-model="email">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 form-it">
-        <label>First Name</label>
-        <input type="text" placeholder="First Name" v-model="firstname">
-      </div>
-      <div class="col-md-6 form-it">
-        <label>Last Name</label>
-        <input type="text" placeholder="Last Name" v-model="lastname">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2">
-        <input class="submit" type="submit" value="save">
-      </div>
-    </div>	
-  </form>
-  <!-----------------END : Profile Details-------------->
-  <!-----------------Change Password-------------------->
-  <form id="changePassword" class="password" @submit.prevent="change">
-    <h4>Change password</h4>
-    <div class="row">
-      <div class="col-md-6 form-it">
-        <label>Old Password</label>
-        <input type="text" v-model="old_password" placeholder="**********">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 form-it">
-        <label>New Password</label>
-        <input type="text" v-model="new_password" placeholder="***************">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 form-it">
-        <label>Confirm New Password</label>
-        <input type="text" v-model="confirm_new_password" placeholder="*************** ">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2">
-        <input class="submit" type="submit" value="change">
-      </div>
-    </div>	
-  </form>
-  <!--------------END :Change Password------------------>
-</div>
-</template>
