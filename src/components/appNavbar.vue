@@ -43,9 +43,12 @@
 					
 					<!--------------On Right Items--------------->
 					<ul class="nav navbar-nav flex-child-menu menu-right">
-						<!-- TODO : search for loginLink and btn signupLink and rename them correctly--> 
-						<li class="loginLink"><RouterLink to="/login">Login</RouterLink></li>
-						<li class="loginLink"><RouterLink to="/signup">Sign Up</RouterLink></li>
+						<!-- TODO : search for loginLink and btn signupLink and rename them correctly-->
+						<li v-if="this.current_user" class="loginLink"><RouterLink to="/dashboard">Dashboard</RouterLink></li>
+						<template v-else>
+							<li vclass="loginLink"><RouterLink to="/login">Login</RouterLink></li>
+							<li class="loginLink"><RouterLink to="/signup">Sign Up</RouterLink></li>
+						</template>
 					</ul>
 					<!--------------END :On Right Items--------------->
 				</div>
@@ -64,13 +67,15 @@
 <script>
 import { getAuth, signOut } from "firebase/auth";
 import { toRaw } from "vue";
+import { auth } from "@/main";
 
 export default {
 
 	data() {
 		return {
 			genres: [],
-			selected: "Genre"
+			selected: "Genre",
+			current_user: auth.currentUser
 		};
 	},
 
@@ -138,10 +143,22 @@ export default {
 				
 				this.$router.push('/');
 			});
+		},		
+	},
+	watch: {
+		'$store.state':{
+			handler(newValue) {
+				if (this.$store.getters.getMessage["authenticated"]) {
+					this.current_user = true;
+				}
+				else {
+					this.current_user = undefined;
+				}
+			},
+			deep: true
 		},
-
-		
 	}
+
 };
 </script>
 

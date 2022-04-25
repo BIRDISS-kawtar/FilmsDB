@@ -39,8 +39,8 @@
 						</div>
 					</div>
 					<div class="social-btn">
-						<div class="hover-bnt">
-							<a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorits</a>
+						<div @click="addToFavorites" class="hover-bnt">
+							<a class="parent-btn"><i class="ion-heart"></i> Add to Favorits</a>
 						</div>		
 					</div>
 					<div class="movie-tabs">
@@ -57,9 +57,7 @@
 						            		<p>{{movie.overview}}</p>
 						            		<!-- <div class="title-hd-sm">
 												<h4>Videos & Photos</h4>
-												<a href="#" class="time">All 5 Videos & 245 Photos <i class="ion-ios-arrow-right"></i></a>
-											</div>
-											<div class="mvsingle-item ov-item">
+												<a href=movie_idmvsingle-item ov-item">
 												<a class="img-lightbox"  data-fancybox-group="gallery" href="../assets/images/uploads/image11.jpg" ><img src="../assets/images/uploads/image1.jpg" alt=""></a>
 												<a class="img-lightbox"  data-fancybox-group="gallery" href="../assets/images/uploads/image21.jpg" ><img src="../assets/images/uploads/image2.jpg" alt=""></a>
 												<a class="img-lightbox"  data-fancybox-group="gallery" href="../assets/images/uploads/image31.jpg" ><img src="../assets/images/uploads/image3.jpg" alt=""></a>
@@ -262,6 +260,8 @@
 
 <script>
 import Paginate from 'vuejs-paginate-next'; // Pagination
+import UsersInfos from "@/firestoreCRUD/UsersInfos";
+import { auth } from "@/main";
 
 export default {
 	name: "movie_details",
@@ -399,6 +399,18 @@ export default {
 			//reset position for tabs
 			//multiItem.slick('setPosition');
 			//multiItem2.slick('setPosition');
+		},
+
+		addToFavorites(){
+			console.log("triggered");
+			if(auth.currentUser){
+				UsersInfos.addToFavorites(auth.currentUser.uid, this.movie_id);
+				console.log("added to favorites");
+			}
+			else {
+				//alert("You must be logged in to add Favorites");
+				this.$router.push("/login");
+			}
 		}
 	}
 };

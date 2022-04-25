@@ -50,6 +50,7 @@ export default {
           .then((userCredential) => {
             // Logged in
             // Redirection to the login page
+            this.$store.commit("setMessage", [ 'authenticated', auth.currentUser ])
             this.$router.push('/dashboard');
           })
           .catch((error) => {

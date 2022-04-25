@@ -8358,3 +8358,11 @@ footer.full-width-ft .ft-copyright {
 .user-information ul li.active a {
   cursor: pointer;
 }
+
+.hover-bnt a{
+  cursor: pointer;
+}
+
+.favorite {
+  margin-top: 10px;
+}

@@ -9,7 +9,7 @@ class UsersInfos {
     const docRef = doc(db,"UserInfos",userID);
     return setDoc(docRef,user);
   } 
-  addToFavorite(userID,movieID){
+  addToFavorites(userID,movieID){
     // The document ID is defined in the third argument
     const docRef = doc(db,"UserInfos",userID);
     updateDoc(docRef,{moviesID : arrayUnion(movieID)});

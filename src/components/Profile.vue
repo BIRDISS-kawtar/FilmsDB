@@ -164,7 +164,7 @@ export default {
           }
         }).catch((errorlogin) => {
           // User is logged out
-          alert("Wrong Passwor Error",errorlogin);
+          alert("Wrong Password Error",errorlogin);
           signOut(auth).then(() => {
             this.$router.push('/');
           }).catch((errorlogin) => {

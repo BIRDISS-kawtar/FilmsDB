@@ -121,7 +121,12 @@ export default {
   methods:{
 	logout(){ // Logout Method
 		signOut(auth).then(() => {
+			
+			this.$store.commit("deleteMessage", 'authenticated')
 			this.$router.push('/');
+
+
+
 		}).catch((error) => {
 			alert("Error in logout"+error.message);
 			this.$router.push('/');

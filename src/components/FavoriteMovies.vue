@@ -11,9 +11,9 @@
         <div class="movie-item-style-2 movie-item-style-1 style-3">
             <img v-if="movie.poster_path" v-bind:src="`http://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="">
             <img v-else v-bind:src="'src/assets/images/uploads/unfound_poster.jpg'" alt="">
-            <!-- <div class="hvr-inner">
-                <a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-            </div> -->
+            <div class="hvr-inner">
+                <div class="ion-android-arrow-dropright"><RouterLink :to="{ path:'/moviedetails', query: { movie_id: movie.id }}"> Read more </RouterLink></div>
+            </div>
             <div class="mv-item-infor">
                 <h6 v-if="movie.title"><a>{{movie.title}}</a></h6>
                 <h6 v-else-if="movie.original_title"><a>{{movie.original_title}}</a></h6>
@@ -41,14 +41,17 @@
 <script>
 import Paginate from 'vuejs-paginate-next'; // Pagination
 import { toRaw } from 'vue';
+
+
+
 export default {
     name: "favorite-movies", // always put the name it's a good practice : https://forum.vuejs.org/t/why-we-need-to-name-vue-component/30909
 
     /*---------The data to use in the template and in other components---------*/
     data() {
         return {
-            total_pages_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_pages,
-            total_results_favorite_movies: toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_results,
+            total_pages_favorite_movies: 0,
+            total_results_favorite_movies: 0,
             favorite_movies: null,
             errorMessage: null,
             start_slice : 0,
@@ -89,7 +92,12 @@ export default {
     },
     //lifecycle
     mounted(){
+        if(toRaw(this.$store.getters.getMessage.favoriteMoviesList)){
+            this.total_pages_favorite_movies = toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_pages;
+            this.total_results_favorite_movies = toRaw(this.$store.getters.getMessage.favoriteMoviesList).total_results
+        }
         this.getPageResults();
+        
     }
 };
 </script>
