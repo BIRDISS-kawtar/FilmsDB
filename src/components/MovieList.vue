@@ -15,7 +15,8 @@
                     <template v-for="movie in this.movies" :key="movie.id">
                         <!-----------------Movie Card ---------------------->
                         <div class="movie-item-style-2 movie-item-style-1">
-                            <img v-bind:src="'http://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
+                            <img v-if="movie.poster_path" v-bind:src="`http://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="">
+                            <img v-else v-bind:src="'src/assets/images/uploads/unfound_poster2.jpg'" alt="">
                             <div class="hvr-inner">
                                 <div class="ion-android-arrow-dropright"><RouterLink :to="{ path:'/moviedetails', query: { movie_id: movie.id }}"> Read more </RouterLink></div>
                             </div>
