@@ -5797,7 +5797,7 @@ ul {
 .user-information {
   border: 3px solid #0f2133;
   margin-right: 30px;
-  margin-top: -200px;
+  margin-top: 0px;
   background-color: #020d18;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
